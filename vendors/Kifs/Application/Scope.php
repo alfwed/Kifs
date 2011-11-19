@@ -15,6 +15,8 @@ class Scope
 
 	private $_appDir;
 
+	private $_tplDir;
+
 	private $_configs;
 
 	private $_env;
@@ -75,12 +77,25 @@ class Scope
 		$this->_appDir = $appDir;
 	}
 
+	public function getTemplateDir()
+	{
+		return $this->_tplDir;
+	}
+
+	public function setTemplateDir($tplDir)
+	{
+		$this->_tplDir = $tplDir;
+	}
+
 	public function loadConfig($name)
 	{
 		if (isset($this->_configs[$name]))
 			return;
 
+		// Make these 2 variables  visible into the config files
 		$appDir = $this->getAppDir();
+		$tplDir = $this->getTemplateDir();
+
 		$filename = $appDir.'/Config/'.$this->getEnv().'/'.$name.'.php';
 
 		if (!file_exists($filename))

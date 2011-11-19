@@ -2,7 +2,8 @@
 /*
  * This is where all the glue code goes.
  *
- * TODO : add Error handler
+ * TODO view helpers
+ * TODO improve config files?
  */
 
 error_reporting(E_ALL);
@@ -23,6 +24,7 @@ Kifs\Autoload\Autoloader::register();
 // Init application scope
 $appScope = new Kifs\Application\Scope($_POST, $_GET, $_COOKIE, $_SERVER);
 $appScope->setAppDir($appDir);
+$appScope->setTemplateDir($appDir.'/Template');
 
 // Set env
 $env = ucfirst(getenv('APP_ENV') ?: 'prod');
@@ -34,11 +36,10 @@ $controllerInjector = new Injector\Controller($appScope);
 
 // Init error handler
 $errorHandler = $appInjector->injectErrorHanlder();
-//$errorHandler->start();
+$errorHandler->start();
 
 // Init database connections
 $appScope->loadConfig('Db');
-
 $appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection(
 	$appScope->getConfig('Db', 'host'),
 	$appScope->getConfig('Db', 'login'),

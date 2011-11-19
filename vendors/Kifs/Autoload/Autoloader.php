@@ -1,7 +1,7 @@
 <?php
 namespace Kifs\Autoload;
 
-class Autoloader
+class Autoloader // FIXME move to Application\Autoloader
 {
 	public function register()
 	{

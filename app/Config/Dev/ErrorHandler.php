@@ -4,15 +4,15 @@
  */
 
 // Error page template
-$conf['templateInternalError'] = $appDir.'';
+$conf['templateInternalError'] = $tplDir.'/Error500.php';
 
 // Config for display
 $conf['showErrors'] = true;
-$conf['templateErrorFront'] = $appDir.'';
+$conf['templateErrorFront'] = $tplDir.'/ErrorHandler/ErrorFront.php';
 
 // Config for mail report
 $conf['mailErrors'] = false;
-$conf['templateErrorMail'] = $appDir.'';
+$conf['templateErrorMail'] = $tplDir.'/ErrorHandler/ErrorMail.php';
 $conf['mailErrorsTo'] = array(
 	'support@my-domain.com',
 	'devteam@my-domain.com'

@@ -35,7 +35,6 @@ class Application
 
 	public function injectRequest()
 	{
-		// FIXME Request type
 		return new \Kifs\Controller\Request\Http(
 			$this->_appScope->getPosts(),
 			$this->_appScope->getQueries(),
@@ -46,12 +45,12 @@ class Application
 
 	public function injectResponse()
 	{
-		return new \Kifs\Controller\Response\Http(); // FIXME response type
+		return new \Kifs\Controller\Response\Http();
 	}
 
 	public function injectView()
 	{
-		return new \Kifs\View\Standard(null, $this->_appScope->getAppDir().'/Template'); //FIXME Engine or not?
+		return new \Kifs\View\Standard(null, $this->_appScope->getTemplateDir()); //FIXME Engine or not?
 	}
 
 	public function injectMysqlDbConnection($host, $login, $pass, $db)

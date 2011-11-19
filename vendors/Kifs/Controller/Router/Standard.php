@@ -6,7 +6,6 @@ class Standard
 	private $routes;
 
 
-
 	public function __construct()
 	{
 	}
@@ -34,7 +33,6 @@ class Standard
 	}
 
 	/**
-	 * FIXME it feels like the request should be asbtracted
 	 * @param \Kifs\Controller\Request\Http $request
 	 * @return bool
 	 */

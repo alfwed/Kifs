@@ -7,6 +7,8 @@ class Standard implements View
 
 	private $_templateDir;
 
+	private $_helpers;
+
 
 	public function __construct($viewEngine, $templateDir)
 	{
@@ -24,6 +26,22 @@ class Standard implements View
 		ob_end_clean();
 
 		return $content;
+	}
+
+	public function registerHelper($helper) // FIXME
+	{
+		$helperName = get_class($helper);
+		$helperName = substr($helperName, strrpos($helperName, '\\')+1);
+
+		$this->_helpers[$helperName] = $helper;
+	}
+
+	public function getHelper($name)
+	{
+		if (isset($this->_helpers[$name]))
+			return $this->_helpers[$name];
+
+		return null;
 	}
 
 }
