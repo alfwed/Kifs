@@ -15,4 +15,9 @@ class Controller
 		return new \Controller\Error404();
 	}
 
+	public function injectDummy()
+	{
+
+	}
+
 }

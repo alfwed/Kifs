@@ -46,15 +46,15 @@ class ErrorHandler
 
 	public function errorHdlr($errorType, $msg, $file, $line)
 	{
-		$aBackTrace = array_reverse(debug_backtrace());
-		array_pop($aBackTrace);
+		$backtraces = array_reverse(debug_backtrace());
+		array_pop($backtraces);
 
 	    $this->_errorStack[] = array(
-	    	'iType' => $errorType,
-	    	'sMsg'	=> $msg,
-	    	'sFile'	=> $file,
-	    	'iLine'	=> $line,
-	    	'aBackTrace' => $aBackTrace
+	    	'type' => $errorType,
+	    	'message'	=> $msg,
+	    	'file'	=> $file,
+	    	'line'	=> $line,
+	    	'backtraces' => $backtraces
 	    );
 
 	    // Don't execute PHP internal error handler
@@ -78,8 +78,9 @@ class ErrorHandler
 
 		if (in_array($error['type'], array(E_ERROR, E_USER_ERROR)))
 		{
-			$this->errorHandlerCallback($error['type'], $error['message'], $error['file'], $error['line']);
+			$this->errorHdlr($error['type'], $error['message'], $error['file'], $error['line']);
 			$this->_hasFatalError = true;
+			require $this->_templateInternalError;
 		}
 
 		$this->_displayOrSendErrors();
@@ -87,6 +88,9 @@ class ErrorHandler
 
 	private function _displayOrSendErrors()
 	{
+		if (empty($this->_errorStack))
+			return;
+
 		if ($this->_showErrors)
 			$this->_displayErrors();
 
@@ -96,7 +100,6 @@ class ErrorHandler
 
 	private function _displayErrors()
 	{
-		var_dump($this->_templateErrorFront);
 		if (!isset($this->_templateErrorFront))
 			return;
 
