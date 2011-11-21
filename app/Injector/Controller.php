@@ -3,11 +3,28 @@ namespace Injector;
 
 class Controller
 {
+	/**
+	 * @var \Kifs\Application\Scope
+	 */
 	private $_appScope;
 
-	public function __construct($appScope)
+	/**
+	 * @var Model
+	 */
+	private $_modelInjector;
+
+	private $_businessInjector;
+
+	/**
+	 * @param \Kifs\Application\Scope $appScope
+	 * @param Model $modelInjector
+	 * @param Business $businessInjector
+	 */
+	public function __construct($appScope, $modelInjector, $businessInjector)
 	{
 		$this->_appScope = $appScope;
+		$this->_modelInjector = $modelInjector;
+		$this->_businessInjector = $businessInjector;
 	}
 
 	public function injectError404()
@@ -17,7 +34,7 @@ class Controller
 
 	public function injectDummy()
 	{
-
+		return new \Controller\Dummy($this->_modelInjector->injectDummy());
 	}
 
 }

@@ -28,7 +28,7 @@ class Standard implements View
 		return $content;
 	}
 
-	public function registerHelper($helper) // FIXME
+	public function registerHelper($helper)
 	{
 		$helperName = get_class($helper);
 		$helperName = substr($helperName, strrpos($helperName, '\\')+1);

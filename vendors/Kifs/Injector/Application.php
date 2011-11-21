@@ -4,13 +4,13 @@ namespace Kifs\Injector;
 class Application
 {
 	/**
-	 * @var Kifs\Application\Scope
+	 * @var \Kifs\Application\Scope
 	 */
 	private $_appScope;
 
 
 	/**
-	 * @param Kifs\Application\Scope $appScope
+	 * @param \Kifs\Application\Scope $appScope
 	 */
 	public function __construct($appScope)
 	{

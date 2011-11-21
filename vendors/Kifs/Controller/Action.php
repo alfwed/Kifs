@@ -3,19 +3,29 @@ namespace Kifs\Controller;
 
 class Action
 {
+	/**
+	 * @var \Kifs\Controller\Request\Http
+	 */
 	protected $_request;
 
+	/**
+	 * @var \Kifs\Controller\Response\Http
+	 */
 	protected $_response;
 
+	/**
+	 * @var \Kifs\View\Standard
+	 */
 	protected $_view;
+
 
 	public function __construct()
 	{
 	}
 
 	/**
-	 * @param Kifs\Controller\Request\Http $request
-	 * @return Kifs\Controller\Response\AbstractResponse
+	 * @param \Kifs\Controller\Request\Http $request
+	 * @return \Kifs\Controller\Response\Http
 	 */
 	public function dispatch($request)
 	{
@@ -29,16 +39,30 @@ class Action
 		return $this->_response;
 	}
 
+	/**
+	 * Set the response used by the controller
+	 *
+	 * @param \Kifs\Controller\Response\Http $response
+	 */
 	public function setResponse($response)
 	{
 		$this->_response = $response;
 	}
 
+	/**
+	 * Set the view used by the controller
+	 *
+	 * @param \Kifs\View\Standard $view
+	 */
 	public function setView($view)
 	{
 		$this->_view = $view;
 	}
 
+	/**
+	 * This is where you put all the logic. This method set the data into
+	 * into the view and configure the response. // FIXME
+	 */
 	protected function _dispatch()
 	{
 	}

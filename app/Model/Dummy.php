@@ -4,7 +4,7 @@ namespace Model;
 class Dummy
 {
 	/**
-	 * @var Kifs\Db\Mysql
+	 * @var \Kifs\Db\Mysql
 	 */
 	private $db;
 
@@ -13,9 +13,13 @@ class Dummy
 		$this->db = $db;
 	}
 
-	public function getPosts()
+	public function getMessagesByUser($username)
 	{
+		$sql = "SELECT *
+				FROM dummy
+				WHERE user = ".mysql_real_escape_string($username);
 
+		return $this->db->query($sql);
 	}
 
 }

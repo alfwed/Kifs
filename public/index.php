@@ -18,8 +18,8 @@ set_include_path($appDir.PATH_SEPARATOR.
 		realpath(__DIR__.'/../vendors').PATH_SEPARATOR.
 		get_include_path());
 
-require 'Kifs/Autoload/Autoloader.php';
-Kifs\Autoload\Autoloader::register();
+require 'Kifs/Application/Autoloader.php';
+Kifs\Application\Autoloader::register();
 
 // Init application scope
 $appScope = new Kifs\Application\Scope($_POST, $_GET, $_COOKIE, $_SERVER);
@@ -32,7 +32,8 @@ $appScope->setEnv($env);
 
 // Init injectors
 $appInjector = new Kifs\Injector\Application($appScope);
-$controllerInjector = new Injector\Controller($appScope);
+$modelInjector = new Injector\Model($appScope);
+$controllerInjector = new Injector\Controller($appScope, $modelInjector);
 
 // Init error handler
 $errorHandler = $appInjector->injectErrorHanlder();

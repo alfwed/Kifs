@@ -33,7 +33,7 @@ class ErrorHandler
 		register_shutdown_function(array($this, 'shutdownCallback'));
 	}
 
-	private function _loadConf($config) // FIXME
+	private function _loadConf($config) // FIXME loadConf()
 	{
 		if (empty($config) || !is_array($config))
 			throw new \UnexpectedValueException('Config array for ErrorHandler class was empty or invalid');
