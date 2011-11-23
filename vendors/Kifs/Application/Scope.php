@@ -17,9 +17,13 @@ class Scope
 
 	private $_tplDir;
 
+	private $_publicDir;
+
 	private $_configs;
 
 	private $_env;
+
+	private $_instances = array();
 
 
 	public function __construct($posts, $queries, $cookies, $server)
@@ -60,9 +64,8 @@ class Scope
 
 	public function addDbConnection($name, $db)
 	{
-		// FIXME just raise a warning instead of exception
 		if (isset($this->_databases[$name]))
-			throw new Exception('Database '.$name.' was already registered');
+			trigger_error('Database connection named "'.$name.'" was already registered', E_USER_WARNING);
 
 		$this->_databases[$name] = $db;
 	}
@@ -87,21 +90,35 @@ class Scope
 		$this->_tplDir = $tplDir;
 	}
 
+	public function getPublicDir()
+	{
+		return $this->_publicDir;
+	}
+
+	public function setPublicDir($dir)
+	{
+		$this->_publicDir = $dir;
+	}
+
 	public function loadConfig($name)
 	{
 		if (isset($this->_configs[$name]))
 			return;
 
-		// Make these 2 variables  visible into the config files
+		// Make these 3 variables  visible into the config files
 		$appDir = $this->getAppDir();
 		$tplDir = $this->getTemplateDir();
+		$publicDir = $this->getPublicDir();
 
-		$filename = $appDir.'/Config/'.$this->getEnv().'/'.$name.'.php';
+		$filenameCommon = $appDir.'/Config/'.$name.'.php';
+		$filenameEnv = $appDir.'/Config/'.$this->getEnv().'/'.$name.'.php';
 
-		if (!file_exists($filename))
-			return;
-
-		$this->_configs[$name] = include $filename;
+		if (file_exists($filenameCommon))
+			$this->_configs[$name] = include $filenameCommon;
+		elseif(file_exists($filenameEnv))
+			$this->_configs[$name] = include $filenameEnv;
+		else
+			throw new Exception('Config file for "'.$name.'" does not exist');
 	}
 
 	public function setEnv($env)
@@ -129,5 +146,19 @@ class Scope
 
 		return null;
 	}
-}
 
+	public function registerInstance($name, $obj)
+	{
+		if (!isset($this->_instances[$name]))
+			$this->_instances[$name] = $obj;
+	}
+
+	public function getInstance($name)
+	{
+		if (isset($this->_instances[$name]))
+			return $this->_instances[$name];
+
+		return null;
+	}
+
+}

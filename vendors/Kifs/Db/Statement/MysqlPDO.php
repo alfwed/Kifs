@@ -21,12 +21,12 @@ class MysqlPDO
 
 	public function fetch($fetchMode = \Kifs\Db\Mysql::FETCH_ASSOC)
 	{
-		$this->_stmt->fetch($fetchMode);
+		return $this->_stmt->fetch($fetchMode);
 	}
 
 	public function fetchAll($fetchMode = \Kifs\Db\Mysql::FETCH_ASSOC)
 	{
-		$this->_stmt->fetchAll($fetchMode);
+		return $this->_stmt->fetchAll($fetchMode);
 	}
 
 }

@@ -60,12 +60,9 @@ class Action
 	}
 
 	/**
-	 * This is where you put all the logic. This method set the data into
-	 * into the view and configure the response. // FIXME
+	 * Called before rendering the view. This is where you do all your business.
 	 */
-	protected function _dispatch()
-	{
-	}
+	abstract protected function _dispatch();
 
 	private function _getFormatedTemplateName()
 	{
