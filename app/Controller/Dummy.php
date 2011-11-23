@@ -3,9 +3,15 @@ namespace Controller;
 
 class Dummy extends \Kifs\Controller\Action
 {
+	/**
+	 * @var \Model\Dummy
+	 */
 	private $_dummyDao;
 
 
+	/**
+	 * @param \Model\Dummy
+	 */
 	public function __construct($dummyDao)
 	{
 		$this->_dummyDao = $dummyDao;
@@ -13,7 +19,7 @@ class Dummy extends \Kifs\Controller\Action
 
 	public function _dispatch()
 	{
-		$this->_view->messages = $this->_dummyDao->getMessageByUser('alfwed');
+		$this->_view->messages = $this->_dummyDao->getMessagesByUser('alfwed');
 		var_dump($this->_view->messages);
 	}
 }

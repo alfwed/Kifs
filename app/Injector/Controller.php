@@ -13,6 +13,9 @@ class Controller
 	 */
 	private $_modelInjector;
 
+	/**
+	 * @var Business
+	 */
 	private $_businessInjector;
 
 	/**

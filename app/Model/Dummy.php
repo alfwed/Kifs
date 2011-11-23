@@ -8,6 +8,7 @@ class Dummy
 	 */
 	private $db;
 
+
 	public function __construct($db)
 	{
 		$this->db = $db;
@@ -17,9 +18,17 @@ class Dummy
 	{
 		$sql = "SELECT *
 				FROM dummy
-				WHERE user = ".mysql_real_escape_string($username);
+				WHERE user = '".$username."'";
+//$sql = "SHOW TABLES";
 
-		return $this->db->query($sql);
+		$stmt = $this->db->query($sql);
+		return $stmt->fetchAll();
+
+		$stmt = $this->db->prepare($sql);
+		/* @var $stmt \Kifs\Db\Statement\MysqlPDO */
+		$stmt->execute(array($username));
+
+		return $stmt->fetch();
 	}
 
 }

@@ -33,7 +33,8 @@ $appScope->setEnv($env);
 // Init injectors
 $appInjector = new Kifs\Injector\Application($appScope);
 $modelInjector = new Injector\Model($appScope);
-$controllerInjector = new Injector\Controller($appScope, $modelInjector);
+$businessInjector = new Injector\Business($appScope);
+$controllerInjector = new Injector\Controller($appScope, $modelInjector, $businessInjector);
 
 // Init error handler
 $errorHandler = $appInjector->injectErrorHanlder();

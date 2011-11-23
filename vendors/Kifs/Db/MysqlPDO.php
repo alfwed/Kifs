@@ -26,7 +26,7 @@ class MysqlPDO extends Mysql
 
 	public function query($sql, $fetchMode = Mysql::FETCH_ASSOC)
 	{
-		return new \Kifs\Db\Statement\Mysql($this->_con->query($sql, $fetchMode));
+		return new \Kifs\Db\Statement\MysqlPDO($this->_con->query($sql, $fetchMode));
 	}
 
 	public function exec($sql)
@@ -36,7 +36,7 @@ class MysqlPDO extends Mysql
 
 	public function prepare($sql)
 	{
-		return new \Kifs\Db\Statement\Mysql($this->_prepare->query($sql));
+		return new \Kifs\Db\Statement\MysqlPDO($this->_con->prepare($sql));
 	}
 
 }
