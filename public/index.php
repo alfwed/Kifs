@@ -4,6 +4,7 @@
  *
  * TODO view helpers
  * TODO improve config files?
+ * TODO partial blocks
  */
 
 error_reporting(E_ALL);
@@ -25,6 +26,7 @@ Kifs\Application\Autoloader::register();
 $appScope = new Kifs\Application\Scope($_POST, $_GET, $_COOKIE, $_SERVER);
 $appScope->setAppDir($appDir);
 $appScope->setTemplateDir($appDir.'/Template');
+$appScope->setPublicDir(__DIR__);
 
 // Set env
 $env = ucfirst(getenv('APP_ENV') ?: 'prod');
@@ -51,7 +53,6 @@ $appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection(
 
 // Init Router
 $router = $appInjector->injectRouter();
-require $appScope->getAppDir().'/Config/Routes.php';
 
 // Init app
 $app = $appInjector->injectControllerApplication($router, $controllerInjector);

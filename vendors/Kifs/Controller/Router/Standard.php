@@ -6,8 +6,9 @@ class Standard
 	private $routes;
 
 
-	public function __construct()
+	public function __construct($config)
 	{
+		$this->_loadRoutesFromConfig($config);
 	}
 
 	/**
@@ -30,6 +31,11 @@ class Standard
 			'controller' => $controllerName,
 			'params' => $params
 		);
+	}
+
+	public function getRoutes()
+	{
+		return $this->_routes;
 	}
 
 	/**
@@ -58,6 +64,18 @@ class Standard
 		// Use default route if no user defined routes matched the URI
 		$request->setControllerName($this->_getDefaultRoute($uri));
 		return true;
+	}
+
+	private function _loadRoutesFromConfig($config)
+	{
+		foreach ($config as $route) {
+			/* @var $route \Kifs\Controller\Router\Route */
+			$this->addRoute(
+				$route->getUri(),
+				$route->getControllerName(),
+				$route->getParams()
+			);
+		}
 	}
 
 	private function _requestAlreadyRouted($request)

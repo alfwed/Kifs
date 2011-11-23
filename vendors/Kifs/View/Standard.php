@@ -7,13 +7,19 @@ class Standard implements View
 
 	private $_templateDir;
 
-	private $_helpers;
+	private $_partialDir;
+
+	private $_partialFactory;
+
+	private $_helpers = array();
 
 
-	public function __construct($viewEngine, $templateDir)
+	public function __construct($viewEngine, $templateDir, $partialFactory)
 	{
 		$this->_engine = $viewEngine;
 		$this->_templateDir = $templateDir;
+		$this->_partialDir = $templateDir.'/Partial';
+		$this->_partialFactory = $partialFactory;
 	}
 
 	public function fetch($templateName)
@@ -42,6 +48,29 @@ class Standard implements View
 			return $this->_helpers[$name];
 
 		return null;
+	}
+
+	/**
+	 * Output the content of a partial.
+	 *
+	 * @param string $name
+	 * @param array $params
+	 * @return void
+	 */
+	public function partial($name, $params = array())
+	{
+		if (null !== $partial = $this->_partialFactory->get($name)) {
+			echo $partial->fetch($params);
+			return;
+		}
+
+		if (file_exists($this->_templateDir.'/Partial/'.$name.'.php')) {
+			extract($params);
+			include $this->_templateDir.'/Partial/'.$name.'.php';
+			return;
+		}
+
+		throw new Exception('Unable to find partial "'.$name.'"');
 	}
 
 }
