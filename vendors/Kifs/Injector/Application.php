@@ -6,15 +6,17 @@ class Application
 	/**
 	 * @var \Kifs\Application\Scope
 	 */
-	private $_appScope;
+	protected $_appScope;
 
+	protected $_partialInjector;
 
 	/**
 	 * @param \Kifs\Application\Scope $appScope
 	 */
-	public function __construct($appScope)
+	public function __construct($appScope, $partialInjector)
 	{
 		$this->_appScope = $appScope;
+		$this->_partialInjector = $partialInjector;
 	}
 
 	public function injectErrorHanlder()
@@ -58,7 +60,8 @@ class Application
 
 	public function injectView() // FIXME pass a scope object to allow customization
 	{
-		$view = new \Kifs\View\Standard(null, $this->_appScope->getTemplateDir()); //FIXME Engine or not?
+		$view = new \Kifs\View\Standard(null, $this->_appScope->getTemplateDir(),
+					$this->_partialInjector); //FIXME Engine or not?
 		$view->registerHelper($this->injectViewHelperCssJs());
 		return $view;
 	}

@@ -1,7 +1,7 @@
 <?php
 namespace Kifs\Controller;
 
-class Action
+abstract class Action
 {
 	/**
 	 * @var \Kifs\Controller\Request\Http
