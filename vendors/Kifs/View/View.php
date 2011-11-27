@@ -16,7 +16,7 @@ interface View
 	 * @param string $name
 	 * @param object $helper
 	 */
-	public function registerHelper($name, $helper);
+	public function registerHelper($helper);
 
 	/**
 	 * Returns the view helper named $name if it was registered before

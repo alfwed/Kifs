@@ -20,6 +20,5 @@ class Dummy extends \Kifs\Controller\Action
 	public function _dispatch()
 	{
 		$this->_view->messages = $this->_dummyDao->getMessagesByUser('alfwed');
-		var_dump($this->_view->messages);
 	}
 }

@@ -18,16 +18,18 @@ abstract class Partial
 	}
 
 	/**
-	 * Return the partial name $name if it exists and null otherwise
+	 * Return the partial named $name if it exists and null otherwise
 	 *
 	 * @param string $name
+	 * @param \Kifs\View\View $view
 	 */
-	public function get($name)
+	public function get($name, $view)
 	{
 		$method = self::_getInjectorMethod($name);
 		if (method_exists($this, $method)) {
 			$partial = $this->$method();
 			$partial->setTemplateDir($this->_appScope->getTemplateDir());
+			$partial->setView($view);
 			return $partial;
 		}
 

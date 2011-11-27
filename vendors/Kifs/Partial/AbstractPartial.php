@@ -9,6 +9,11 @@ abstract class AbstractPartial
 	protected $_templateDir;
 
 	/**
+	 * @var \Kifs\View\View
+	 */
+	protected $_view;
+
+	/**
 	 * @var array
 	 */
 	protected $_params;
@@ -23,17 +28,20 @@ abstract class AbstractPartial
 		$this->_templateDir = $dir;
 	}
 
+	public function setView($view)
+	{
+		$this->_view = $view;
+	}
+
 	/**
 	 * @param array $params
 	 * @return string
 	 */
 	public function fetch($params)
 	{
-		$this->_params = $params;
+		$this->_extract($params);
 
 		$this->_render();
-
-		extract($this->_params);
 
 		ob_start();
 		include $this->_templateDir.'/Partial/'.$this->_getFormatedTemplateName();
@@ -41,6 +49,11 @@ abstract class AbstractPartial
 		ob_end_clean();
 
 		return $content;
+	}
+
+	public function getHelper($name)
+	{
+		return $this->_view->getHelper($name);
 	}
 
 	/**
@@ -61,7 +74,15 @@ abstract class AbstractPartial
 		array_shift($names);
 		$templateName = implode('\\', $names);
 
-		return $templateName;
+		return $templateName.'.php';
+	}
+
+	private function _extract($params)
+	{
+		foreach ($params as $name => $value) {
+			if ('_' !== $name[0] && !is_numeric($name[0]))
+				$this->$name = $value;
+		}
 	}
 
 }

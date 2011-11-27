@@ -78,18 +78,18 @@ class Standard implements View
 	 */
 	public function partial($name, $params = array())
 	{
-		if (null !== $partial = $this->_partialFactory->get($name)) {
+		if (null !== $partial = $this->_partialFactory->get($name, $this)) {
 			echo $partial->fetch($params);
 			return;
 		}
 
-		if (file_exists($this->_templateDir.'/Partial/'.$name.'.php')) {
+		if (file_exists($this->_templateDir.'/Partial/'.ucfirst($name).'.php')) {
 			extract($params);
-			include $this->_templateDir.'/Partial/'.$name.'.php';
+			include $this->_templateDir.'/Partial/'.ucfirst($name).'.php';
 			return;
 		}
 
-		throw new Exception('Unable to find partial "'.$name.'"');
+		throw new \Exception('Unable to find partial "'.$name.'"');
 	}
 
 }
