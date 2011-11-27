@@ -14,7 +14,7 @@ abstract class Action
 	protected $_response;
 
 	/**
-	 * @var \Kifs\View\Standard
+	 * @var \Kifs\View\View
 	 */
 	protected $_view;
 
@@ -43,6 +43,7 @@ abstract class Action
 	 * Set the response used by the controller
 	 *
 	 * @param \Kifs\Controller\Response\Http $response
+	 * @return void
 	 */
 	public function setResponse($response)
 	{
@@ -52,7 +53,8 @@ abstract class Action
 	/**
 	 * Set the view used by the controller
 	 *
-	 * @param \Kifs\View\Standard $view
+	 * @param \Kifs\View\View $view
+	 * @return void
 	 */
 	public function setView($view)
 	{
@@ -62,8 +64,13 @@ abstract class Action
 	/**
 	 * Called before rendering the view. This is where you do all your business.
 	 */
-	abstract protected function _dispatch();
+	abstract protected function _dispatch(); // FIXME find name for _dispatch()
 
+	/**
+	 * Returns the name of the template corresponding to this controller
+	 *
+	 * @return string
+	 */
 	private function _getFormatedTemplateName()
 	{
 		$names = explode('\\', get_class($this));

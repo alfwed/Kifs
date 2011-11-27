@@ -8,6 +8,10 @@ class Model
 	 */
 	private $_appScope;
 
+
+	/**
+	 * @param \Kifs\Application\Scope $appScope
+	 */
 	public function __construct($appScope)
 	{
 		$this->_appScope = $appScope;

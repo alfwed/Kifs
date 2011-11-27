@@ -9,14 +9,22 @@ abstract class Partial
 	protected $_appScope;
 
 
+	/**
+	 * @param \Kifs\Application\Scope $appScope
+	 */
 	public function __construct($appScope)
 	{
 		$this->_appScope = $appScope;
 	}
 
+	/**
+	 * Return the partial name $name if it exists and null otherwise
+	 *
+	 * @param string $name
+	 */
 	public function get($name)
 	{
-		$method = $this->_getInjectorMethod($name);
+		$method = self::_getInjectorMethod($name);
 		if (method_exists($this, $method)) {
 			$partial = $this->$method();
 			$partial->setTemplateDir($this->_appScope->getTemplateDir());
@@ -26,7 +34,13 @@ abstract class Partial
 		return null;
 	}
 
-	public function _getInjectorMethod($name)
+	/**
+	 * Return the name of factory method which instanciates the partial
+	 * named $name
+	 *
+	 * @param string $name
+	 */
+	protected static function _getInjectorMethod($name)
 	{
 		return 'inject'.$name;
 	}

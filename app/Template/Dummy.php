@@ -7,6 +7,8 @@
 <body>
 	<h1>Kifs is the best framework ever made</h1>
 
+	<?php $this->partial('test', array('param' => 'my_param')); ?>
+
 	<p>There are <?php echo count($this->messages); ?> messages</p>
 
 	<table>

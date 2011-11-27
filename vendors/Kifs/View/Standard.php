@@ -5,12 +5,31 @@ class Standard implements View
 {
 	private $_engine;
 
+	/**
+	 * Path to the directory of templates
+	 *
+	 * @var string
+	 */
 	private $_templateDir;
 
+	/**
+	 * Path to the directory where the templates of partials are stored
+	 *
+	 * @var string
+	 */
 	private $_partialDir;
 
+	/**
+	 * @var \Injector\Partial
+	 */
 	private $_partialFactory;
 
+	/**
+	 * Array of view helpers. There is no specific interface for helpers.
+	 * You can register pretty much whatever you want.
+	 *
+	 * @var array
+	 */
 	private $_helpers = array();
 
 

@@ -2,9 +2,10 @@
 /*
  * This is where all the glue code goes.
  *
- * TODO view helpers
  * TODO improve config files?
- * TODO partial blocks
+ * TODO phpdoc
+ * TODO fix method visibility
+ * TODO fix Db connection interface
  */
 
 error_reporting(E_ALL);

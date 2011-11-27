@@ -8,10 +8,14 @@ class Application
 	 */
 	protected $_appScope;
 
+	/**
+	 * @var \Kifs\Injector\Partial
+	 */
 	protected $_partialInjector;
 
 	/**
 	 * @param \Kifs\Application\Scope $appScope
+	 * @param \Kifs\Injector\Partial $partialInjector
 	 */
 	public function __construct($appScope, $partialInjector)
 	{

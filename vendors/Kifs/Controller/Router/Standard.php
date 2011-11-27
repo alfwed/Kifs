@@ -3,9 +3,23 @@ namespace Kifs\Controller\Router;
 
 class Standard
 {
+	/**
+	 *Array of routes
+	 *
+	 *	array(
+	 *		uri => /plop/foo/:page/bar
+	 *		controllerName => Foo\Bar
+	 * 		params => array(':paramname' => 'int')
+	 * 	)
+	 *
+	 * @var array
+	 */
 	private $routes;
 
 
+	/**
+	 * @param array $config array of Route
+	 */
 	public function __construct($config)
 	{
 		$this->_loadRoutesFromConfig($config);
@@ -19,10 +33,10 @@ class Standard
 	 *		controllerName : Foo\Bar
 	 * 		params : array(':paramname' => 'int')
 	 *
-	 * @param string $uri
+	 * @param string $uri Pattern of uri
 	 * @param string $controllerName fully qualified name without the 'Controller' namespace
-	 * @param string $controllerAction
-	 * @param array $params
+	 * @param array $params Types of the uri parameters if any
+	 * @return void
 	 */
 	public function addRoute($uri, $controllerName, $params = array())
 	{
@@ -31,11 +45,6 @@ class Standard
 			'controller' => $controllerName,
 			'params' => $params
 		);
-	}
-
-	public function getRoutes()
-	{
-		return $this->_routes;
 	}
 
 	/**
@@ -115,7 +124,7 @@ class Standard
 		}
 	}
 
-	public function _getDefaultRoute($uri)
+	private function _getDefaultRoute($uri)
 	{
 		if (empty($uri))
 			return 'Index';

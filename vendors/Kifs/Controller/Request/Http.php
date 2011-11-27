@@ -18,6 +18,12 @@ class Http
 	private $_dispatched = false;
 
 
+	/**
+	 * @param array $posts
+	 * @param array $queries
+	 * @param array $cookies
+	 * @param array $server
+	 */
 	public function __construct($posts, $queries, $cookies, $server)
 	{
 		$this->_posts = $posts;
@@ -26,6 +32,11 @@ class Http
 		$this->_server = $server;
 	}
 
+	/**
+	 * Get POST variable named $key
+	 *
+	 * @param string $key
+	 */
 	public function getPost($key)
 	{
 		if (isset($this->_posts[$key]))
@@ -34,11 +45,19 @@ class Http
 		return null;
 	}
 
+	/**
+	 * Get all POST variables
+	 */
 	public function getPosts()
 	{
 		return $this->_posts;
 	}
 
+	/**
+	 * Get GET variable name $key
+	 *
+	 * @param string $key
+	 */
 	public function getQuery($key)
 	{
 		if (isset($this->_queries[$key]))
@@ -47,11 +66,19 @@ class Http
 		return null;
 	}
 
+	/**
+	 * Get all GET variables
+	 */
 	public function getQueries()
 	{
 		return $this->_queries;
 	}
 
+	/**
+	 * Get cookie named $key
+	 *
+	 * @param string $key
+	 */
 	public function getCookie($key)
 	{
 		if (isset($this->_cookies[$key]))
@@ -60,16 +87,19 @@ class Http
 		return null;
 	}
 
+	/**
+	 * Get all cookies
+	 */
 	public function getCookies()
 	{
 		return $this->_cookies;
 	}
 
-	public function getServers()
-	{
-		return $this->_server;
-	}
-
+	/**
+	 * Get Server variable named $key
+	 *
+	 * @param string $key
+	 */
 	public function getServer($key)
 	{
 		if (isset($this->_server[$key]))
@@ -78,21 +108,45 @@ class Http
 		return null;
 	}
 
+	/**
+	 * Get all Server variables
+	 */
+	public function getServers()
+	{
+		return $this->_server;
+	}
+
+	/**
+	 * Get the name of the controller that will handle the request
+	 */
 	public function getControllerName()
 	{
 		return $this->_controllerName;
 	}
 
+	/**
+	 * Set the name of the controller that will handle the request
+	 *
+	 * @param string $controllerName
+	 */
 	public function setControllerName($controllerName)
 	{
 		$this->_controllerName = $controllerName;
 	}
 
+	/**
+	 * Return true if the request has been dispatched and false otherwise.
+	 */
 	public function isDispatched()
 	{
 		return $this->_dispatched;
 	}
 
+	/**
+	 * Set to true if the request has been dispatched and false otherwise
+	 *
+	 * @param boolean $dispatched
+	 */
 	public function dispatched($dispatched)
 	{
 		$this->_dispatched = $dispatched;

@@ -8,11 +8,22 @@ class Application
 	 */
 	private $_router;
 
+	/**
+	 * @var \Injector\Controller
+	 */
 	private $_controllerFactory;
 
+	/**
+	 * @var \Kifs\Injector\Application
+	 */
 	private $_appFactory;
 
 
+	/**
+	 * @param \Kifs\Controller\Router\Standard $router
+	 * @param \Injector\Controller $controllerFactory
+	 * @param \Kifs\Injector\Application $appFactory
+	 */
 	public function __construct($router, $controllerFactory, $appFactory)
 	{
 		$this->_router = $router;
@@ -20,6 +31,10 @@ class Application
 		$this->_appFactory = $appFactory;
 	}
 
+	/**
+	 * @param \Kifs\Controller\Request\Http $request
+	 * @throws \Exception
+	 */
 	public function dispatch($request)
 	{
 		$this->_router->route($request);
