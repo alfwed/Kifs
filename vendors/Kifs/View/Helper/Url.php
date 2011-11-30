@@ -21,7 +21,6 @@ class Url
 
 		foreach ($this->_routes as $route) {
 			/* @var $route \Kifs\Controller\Router\Route */
-
 			if ($route->getControllerName() == $controller) {
 				$uri = $route->getUri();
 				if (empty($params)) {

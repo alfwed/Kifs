@@ -2,10 +2,11 @@
 namespace Kifs\Db;
 
 
+/**
+ * @deprecated
+ */
 abstract class Mysql
 {
-	const FETCH_ASSOC = \PDO::FETCH_ASSOC;
-
 	abstract public function connect($host, $login, $pass, $db);
 
 	abstract public function query($sql, $fetchMode);

@@ -1,12 +1,6 @@
-<?php
+<?php echo '<?php'; ?>
 /*
  * This is where all the glue code goes.
- *
- * TODO improve config files? array_merge(prod, test, dev) but doesn't work with objects
- * TODO phpdoc
- * TODO app generator
- * TODO logger
- * TODO translator
  */
 
 error_reporting(E_ALL);
@@ -14,7 +8,7 @@ error_reporting(E_ALL);
 /*
  * Feel free to rename the app directory as you like
  */
-$appDir = realpath(__DIR__.'/../app');
+$appDir = realpath(__DIR__.'/../<?php echo $this->_appName; ?>');
 
 // Init autoloader
 set_include_path($appDir.PATH_SEPARATOR.

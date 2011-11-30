@@ -64,8 +64,10 @@ class Application
 
 	public function injectView() // FIXME pass a scope object to allow customization
 	{
-		$view = new \Kifs\View\Standard(null, $this->_appScope->getTemplateDir(),
-					$this->_partialInjector); //FIXME Engine or not?
+		$view = new \Kifs\View\Standard(
+			$this->_appScope->getTemplateDir(),
+			$this->_partialInjector
+		);
 		$view->registerHelper($this->injectViewHelperCssJs());
 		return $view;
 	}

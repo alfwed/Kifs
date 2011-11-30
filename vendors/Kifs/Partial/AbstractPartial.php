@@ -28,6 +28,9 @@ abstract class AbstractPartial
 		$this->_templateDir = $dir;
 	}
 
+	/**
+	 * @param \Kifs\View\View $view
+	 */
 	public function setView($view)
 	{
 		$this->_view = $view;
@@ -51,6 +54,11 @@ abstract class AbstractPartial
 		return $content;
 	}
 
+	/**
+	 * Return the view helper named $name
+	 *
+	 * @param object $name
+	 */
 	public function getHelper($name)
 	{
 		return $this->_view->getHelper($name);
@@ -77,6 +85,11 @@ abstract class AbstractPartial
 		return $templateName.'.php';
 	}
 
+	/**
+	 * Extract variables from an array and set them as object properties
+	 *
+	 * @param array $params
+	 */
 	private function _extract($params)
 	{
 		foreach ($params as $name => $value) {

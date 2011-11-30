@@ -13,15 +13,23 @@ class Scope
 
 	private $_databases;
 
+
 	private $_appDir;
 
 	private $_tplDir;
 
 	private $_publicDir;
 
+
 	private $_configs;
 
+
 	private $_env;
+
+	private $_country;
+
+	private $_language;
+
 
 	private $_instances = array();
 
@@ -129,6 +137,26 @@ class Scope
 	public function getEnv()
 	{
 		return $this->_env;
+	}
+
+	public function setCountry($country)
+	{
+		$this->_country = $country;
+	}
+
+	public function getCountry()
+	{
+		return $this->_country;
+	}
+
+	public function setLanguage($language)
+	{
+		$this->_language = $language;
+	}
+
+	public function getLanguage()
+	{
+		return $this->_language;
 	}
 
 	public function getConfigs($name)
