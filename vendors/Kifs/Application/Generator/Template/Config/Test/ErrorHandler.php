@@ -1,4 +1,5 @@
 <?php echo '<?php'; ?>
+
 /**
  * @var $appDir string Path to the app directory
  * @var $tplDir string Path to the template directory

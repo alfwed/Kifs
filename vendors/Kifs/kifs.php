@@ -20,15 +20,16 @@ function showUsage($options)
 
 array_shift($argv);
 
-if (!isset($options[$argv[0]])) {
+if (!isset($argv[0], $options[$argv[0]])) {
 	showUsage($options);
 }
 
-switch ($options[$argv[0]]) {
+switch ($argv[0]) {
 	case 'kickstart':
 		if (!isset($argv[1], $argv[2]))
 			showUsage($options);
 
+		require 'Application/Generator/Generator.php';
 		$gen = new \Kifs\Application\Generator\Generator();
 		$gen->generate($argv[1], $argv[2]);
 		break;

@@ -1,4 +1,5 @@
 <?php echo '<?php'; ?>
+
 namespace Injector;
 
 class Model

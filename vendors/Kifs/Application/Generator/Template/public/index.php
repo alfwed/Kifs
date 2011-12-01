@@ -1,4 +1,5 @@
 <?php echo '<?php'; ?>
+
 /*
  * This is where all the glue code goes.
  */
