@@ -104,19 +104,20 @@ class Standard
 
 			if (!empty($route['params'])) {
 				foreach ($route['params'] as $name => $type) {
+					$params[] = '#'.$name.'#';
 					switch ($type) {
 						case 'int':
-							$patterns[] = '#[0-9]+#';
+							$patterns[] = '\d+';
 							break;
 						case 'string':
-							$patterns[] = '#[^/]+#';
+							$patterns[] = '[^/]+';
 							break;
 						default:
 							throw Exception('Unknow parameter type');
 					}
 				}
 
-				$route['uriPattern'] .= preg_replace($patterns, array_keys($route['params']), $route['uri']);
+				$route['uriPattern'] .= preg_replace($params, $patterns, $route['uri']);
 			} else {
 				$route['uriPattern'] .= $route['uri'];
 			}

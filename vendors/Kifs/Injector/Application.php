@@ -69,6 +69,8 @@ class Application
 			$this->_partialInjector
 		);
 		$view->registerHelper($this->injectViewHelperCssJs());
+		$view->registerHelper($this->injectViewHelperUrl());
+		$view->registerHelper($this->injectViewHelperTranslation());
 		return $view;
 	}
 
@@ -79,6 +81,27 @@ class Application
 			$this->_appScope->getConfigs('View/Helper/CssJs'),
 			$this->_appScope->getPublicDir()
 		);
+	}
+
+	public function injectViewHelperUrl()
+	{
+		$this->_appScope->loadConfig('Routes');
+		return new \Kifs\View\Helper\Url($this->_appScope->getConfigs('Routes'));
+	}
+
+	public function injectViewHelperTranslation()
+	{
+		return new \Kifs\View\Helper\Translation(
+			$this->injectI18nTranslator(),
+			$this->_appScope->getCountry(),
+			$this->_appScope->getLanguage()
+		);
+	}
+
+	public function injectI18nTranslator()
+	{
+		$lang = include $this->_appScope->getAppDir().'/Lang/us/en.php';
+		return new \Kifs\I18n\Translator('', $lang);
 	}
 
 }

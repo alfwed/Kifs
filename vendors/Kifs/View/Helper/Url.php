@@ -26,9 +26,10 @@ class Url
 				if (empty($params)) {
 					$this->_cachedRoutes[$controller] = $uri;
 				} else {
-					$binds = array_keys($params);
+					$binds = array_map(function($v){
+								return '#'.$v.'#';}, array_keys($params));
 					$values = array_values($params);
-					$uri = preg_replace($uri, $binds, $values);
+					$uri = preg_replace($binds, $values, $uri);
 				}
 
 				return $uri;

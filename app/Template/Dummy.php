@@ -7,6 +7,10 @@
 <body>
 	<h1>Kifs is the best framework ever made</h1>
 
+	<p>
+		<?php echo $this->getHelper('Translation')->tr('PONEY', 2); ?>
+		<a href="<?php echo $this->getHelper('Url')->getUrl('Dummy', array(':page' => 3)); ?>">link to self</a>
+	</p>
 	<?php $this->partial('test', array('param' => 'my_param')); ?>
 
 	<p>There are <?php echo count($this->messages); ?> messages</p>

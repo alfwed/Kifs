@@ -1,5 +1,5 @@
 <?php
-namespace \Kifs\Db;
+namespace Kifs\Db;
 
 interface Connection
 {

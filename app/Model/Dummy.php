@@ -4,7 +4,7 @@ namespace Model;
 class Dummy
 {
 	/**
-	 * @var \Kifs\Db\Mysql
+	 * @var \Kifs\Db\Connection
 	 */
 	private $db;
 
