@@ -28,6 +28,7 @@ class Application
 	{
 		$this->_appScope = $appScope;
 		$this->_partialInjector = $partialInjector;
+		$this->_businessInjector = $businessInjector;
 	}
 
 	public function injectErrorHanlder()

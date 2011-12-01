@@ -21,7 +21,7 @@ class Business
 	{
 		// FIXME Load lang file dynamicaly
 		$lang = include $this->_appScope->getAppDir().'/Lang/us/en.php';
-		return new \Kifs\I18n\Translator('', $lang);
+		return new \Kifs\I18n\Translator($lang);
 	}
 
 }

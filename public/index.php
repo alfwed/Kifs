@@ -34,9 +34,9 @@ $appScope->setEnv($env);
 
 // Init injectors
 $partialInjector = new Injector\Partial($appScope);
-$appInjector = new Kifs\Injector\Application($appScope, $partialInjector);
 $modelInjector = new Injector\Model($appScope);
 $businessInjector = new Injector\Business($appScope);
+$appInjector = new Kifs\Injector\Application($appScope, $partialInjector, $businessInjector);
 $controllerInjector = new Injector\Controller($appScope, $modelInjector, $businessInjector);
 
 // Init error handler
