@@ -4,9 +4,7 @@
  *
  * TODO improve config files? array_merge(prod, test, dev) but doesn't work with objects
  * TODO phpdoc
- * TODO app generator
  * TODO logger
- * TODO translator
  */
 
 error_reporting(E_ALL);

@@ -14,10 +14,17 @@ class Application
 	protected $_partialInjector;
 
 	/**
+	 * @var \Kifs\Injector\Business
+	 */
+	protected $_businessInjector;
+
+
+	/**
 	 * @param \Kifs\Application\Scope $appScope
 	 * @param \Kifs\Injector\Partial $partialInjector
+	 * @param \Kifs\Injector\Business
 	 */
-	public function __construct($appScope, $partialInjector)
+	public function __construct($appScope, $partialInjector, $businessInjector)
 	{
 		$this->_appScope = $appScope;
 		$this->_partialInjector = $partialInjector;
@@ -92,16 +99,10 @@ class Application
 	public function injectViewHelperTranslation()
 	{
 		return new \Kifs\View\Helper\Translation(
-			$this->injectI18nTranslator(),
+			$this->_businessInjector->injectI18nTranslator(),
 			$this->_appScope->getCountry(),
 			$this->_appScope->getLanguage()
 		);
-	}
-
-	public function injectI18nTranslator()
-	{
-		$lang = include $this->_appScope->getAppDir().'/Lang/us/en.php';
-		return new \Kifs\I18n\Translator('', $lang);
 	}
 
 }
