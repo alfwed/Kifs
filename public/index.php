@@ -32,6 +32,14 @@ $appScope->setPublicDir(__DIR__);
 $env = ucfirst(getenv('APP_ENV') ?: 'prod');
 $appScope->setEnv($env);
 
+// Set country
+$country = getenv('APP_COUNTRY') ?: 'default';
+$appScope->setCountry($country);
+
+// Set language
+$lang = getenv('APP_LANG') ?: 'default';
+$appScope->setLanguage($lang);
+
 // Init injectors
 $partialInjector = new Injector\Partial($appScope);
 $modelInjector = new Injector\Model($appScope);

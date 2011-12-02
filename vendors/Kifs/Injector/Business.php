@@ -19,8 +19,9 @@ class Business
 
 	public function injectI18nTranslator()
 	{
-		// FIXME Load lang file dynamicaly
-		$lang = include $this->_appScope->getAppDir().'/Lang/us/en.php';
+		$lang = include $this->_appScope->getAppDir().'/Lang/'.
+					$this->_appScope->getCountry().'/'.
+					$this->_appScope->getLanguage().'.php';
 		return new \Kifs\I18n\Translator($lang);
 	}
 
