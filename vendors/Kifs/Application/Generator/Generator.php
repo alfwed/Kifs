@@ -3,6 +3,11 @@ namespace Kifs\Application\Generator;
 
 class Generator
 {
+	/**
+	 * Name of the application to generate
+	 *
+	 * @var string
+	 */
 	private $_appName;
 
 
@@ -35,6 +40,7 @@ class Generator
 		// App - Controller
 		$this->_mkdir($appDir.'/Controller');
 		$this->_genFile($appDir.'/Controller/Error404.php', 'Controller/Error404.php');
+		$this->_genFile($appDir.'/Controller/Index.php', 'Controller/Index.php');
 
 		// App - Injector
 		$this->_mkdir($appDir.'/Injector');
@@ -44,6 +50,10 @@ class Generator
 		$this->_genFile($appDir.'/Injector/Model', 'Injector/Model.php');
 		$this->_genFile($appDir.'/Injector/Partial', 'Injector/Partial.php');
 
+		// App - Lang
+		$this->_mkdir($appDir.'/Lang');
+		$this->_mkdir($appDir.'/Lang/default');
+
 		// App - Model
 		$this->_mkdir($appDir.'/Model');
 
@@ -52,8 +62,13 @@ class Generator
 
 		// App - Template
 		$this->_mkdir($appDir.'/Template');
+		$this->_mkdir($appDir.'/Template/ErrorHandler');
+		$this->_mkdir($appDir.'/Template/Partial');
+		$this->_genFile($appDir.'/Template/ErrorHandler/ErrorFront.php', 'Template/ErrorHandler/ErrorFront.php');
+		$this->_genFile($appDir.'/Template/ErrorHandler/ErrorMail.php', 'Template/ErrorHandler/ErrorMail.php');
 		$this->_genFile($appDir.'/Template/Error404.php', 'Template/Error404.php');
 		$this->_genFile($appDir.'/Template/Error500.php', 'Template/Error500.php');
+		$this->_genFile($appDir.'/Template/Index.php', 'Template/Index.php');
 
 		// Public
 		$this->_mkdir($rootDir.'/public');
@@ -89,3 +104,4 @@ class Generator
 		echo ($result>0 ? 'OK' : 'KO')."\n";
 	}
 }
+

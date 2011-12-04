@@ -1,5 +1,5 @@
-<?php echo '<?php'; ?>
-
+<?php echo <<<'EOD'
+<?php
 namespace Injector;
 
 class Controller
@@ -36,4 +36,10 @@ class Controller
 		return new \Controller\Error404();
 	}
 
+	public function injectIndex()
+	{
+		return new \Controller\Index();
+	}
+
 }
+EOD;
