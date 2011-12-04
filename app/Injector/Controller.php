@@ -35,6 +35,11 @@ class Controller
 		return new \Controller\Error404();
 	}
 
+	public function injectIndex()
+	{
+		return new \Controller\Index();
+	}
+
 	public function injectDummy()
 	{
 		return new \Controller\Dummy($this->_modelInjector->injectDummy());

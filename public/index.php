@@ -2,8 +2,7 @@
 /*
  * This is where all the glue code goes.
  *
- * TODO improve config files? array_merge(prod, test, dev) but doesn't work with objects
- * TODO phpdoc
+ * TODO update templates for the generator
  * TODO logger
  */
 
