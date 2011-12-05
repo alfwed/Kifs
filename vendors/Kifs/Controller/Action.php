@@ -75,7 +75,7 @@ abstract class Action
 	{
 		$names = explode('\\', get_class($this));
 		array_shift($names);
-		$templateName = implode('\\', $names);
+		$templateName = implode('/', $names);
 
 		return $templateName;
 	}
