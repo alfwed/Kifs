@@ -15,6 +15,12 @@ class Generator
 	{
 	}
 
+	/**
+	 * Generate application skeleton
+	 *
+	 * @param string $appName
+	 * @param string $rootDir
+	 */
 	public function generate($appName, $rootDir)
 	{
 		$this->_appName = $appName;
@@ -36,6 +42,9 @@ class Generator
 		$this->_genFile($appDir.'/Config/Dev/Db.php', 'Config/Db.php');
 		$this->_genFile($appDir.'/Config/Prod/Db.php', 'Config/Db.php');
 		$this->_genFile($appDir.'/Config/Test/Db.php', 'Config/Db.php');
+		$this->_genFile($appDir.'/Config/Dev/CssJs.php', 'Config/CssJs.php');
+		$this->_genFile($appDir.'/Config/Prod/CssJs.php', 'Config/CssJs.php');
+		$this->_genFile($appDir.'/Config/Test/CssJs.php', 'Config/CssJs.php');
 
 		// App - Controller
 		$this->_mkdir($appDir.'/Controller');
@@ -83,6 +92,11 @@ class Generator
 		$this->_mkdir($rootDir.'/vendors');
 	}
 
+	/**
+	 * Create directory $path
+	 *
+	 * @param string $path
+	 */
 	private function _mkdir($path)
 	{
 		echo 'Creating directory '.$path.' : ';
@@ -90,6 +104,12 @@ class Generator
 		echo ($result ? 'OK' : 'KO')."\n";
 	}
 
+	/**
+	 * Generate file $path using the template $template
+	 *
+	 * @param string $path
+	 * @param string $template
+	 */
 	private function _genFile($path, $template)
 	{
 		echo 'Generating file '.$path.' : ';
