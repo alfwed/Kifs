@@ -6,7 +6,6 @@
 		body{margin:0;padding:0;background-color:#fff;}
 		h1{color:#2a2;background-color:#252;padding:10px;margin:0;}
 		ul{margin:0;color:#282;}
-		#content{border:1px solid #;}
 		#content p{padding-left:10px;}
 		.info{margin:5px 0;padding:0;}
 		#footer{border-top:1px solid #888;padding:5px 0 0 10px;}
