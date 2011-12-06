@@ -1,18 +1,13 @@
 <?php
 namespace Kifs\Db\Statement;
 
-class MysqlPDO
+class MysqlPDO extends Statement
 {
 	/**
 	 * @var PDOStatement
 	 */
-	private $_stmt;
+	protected $_stmt;
 
-
-	public function __construct($stmt)
-	{
-		$this->_stmt = $stmt;
-	}
 
 	public function execute($params)
 	{
