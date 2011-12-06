@@ -75,6 +75,11 @@ class Standard
 		return true;
 	}
 
+	/**
+	 * Retrieve router's configuration from the $config array
+	 *
+	 * @param array $config
+	 */
 	private function _loadRoutesFromConfig($config)
 	{
 		foreach ($config as $route) {
@@ -87,6 +92,11 @@ class Standard
 		}
 	}
 
+	/**
+	 * Check if the request $request has already been routed
+	 *
+	 * @param \Kifs\Controller\Request\Http $request
+	 */
 	private function _requestAlreadyRouted($request)
 	{
 		$controllerName = $request->getControllerName();
@@ -96,6 +106,9 @@ class Standard
 		return true;
 	}
 
+	/**
+	 * Create regexp patterns for all the known routes
+	 */
 	private function _createUriPatterns()
 	{
 		foreach ($this->_routes as &$route) {
@@ -125,6 +138,11 @@ class Standard
 		}
 	}
 
+	/**
+	 * Return the controller to call if the uri doesn't match any rule
+	 *
+	 * @param string $uri
+	 */
 	private function _getDefaultRoute($uri)
 	{
 		if (empty($uri))

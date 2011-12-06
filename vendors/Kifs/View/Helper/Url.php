@@ -15,7 +15,7 @@ class Url
 
 	public function getUrl($controller, $params = array())
 	{
-		// TODO improve caching
+		// TODO improve caching - cache parameterize urls
 		if (empty($params) && isset($this->_cachedRoutes[$controller]))
 			return $this->_cachedRoutes[$controller];
 

@@ -2,7 +2,7 @@
 /*
  * This is where all the glue code goes.
  *
- * TODO update templates for the generator
+ * TODO update templates for the generator - controller/partial
  * TODO logger
  */
 
@@ -51,13 +51,7 @@ $errorHandler = $appInjector->injectErrorHanlder();
 $errorHandler->start();
 
 // Init database connections
-$appScope->loadConfig('Db');
-$appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection(
-	$appScope->getConfig('Db', 'host'),
-	$appScope->getConfig('Db', 'login'),
-	$appScope->getConfig('Db', 'pass'),
-	$appScope->getConfig('Db', 'db')
-));
+//$appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection('master'));
 
 // Init Router
 $router = $appInjector->injectRouter();

@@ -63,10 +63,21 @@ class Application
 		return new \Kifs\Controller\Response\Http();
 	}
 
-	public function injectMysqlDbConnection($host, $login, $pass, $db)
+	public function injectMysqlDbConnection($dbName)
 	{
+		$this->_appScope->loadConfig('Db');
+		$dbConf = $this->_appScope->getConfig('Db', $dbName);
+
+		if (is_null($dbConf))
+			throw new \Exception('Unable to load config for Db:'.$dbName.'. Config doesn\'t exist.');
+
 		$con = new \Kifs\Db\MysqlPDO();
-		$con->connect($host, $login, $pass, $db);
+		$con->connect(
+			$dbConf['host'],
+			$dbConf['login'],
+			$dbConf['pass'],
+			$dbConf['db']
+		);
 		return $con;
 	}
 
@@ -84,9 +95,15 @@ class Application
 
 	public function injectViewHelperCssJs()
 	{
-		$this->_appScope->loadConfig('View/Helper/CssJs');
+		try {
+			$this->_appScope->loadConfig('CssJs');
+			$conf = $this->_appScope->getConfigs('CssJs');
+		} catch (\Exception $e) {
+			$conf = array();
+		}
+
 		return new \Kifs\View\Helper\CssJs(
-			$this->_appScope->getConfigs('View/Helper/CssJs'),
+			$conf,
 			$this->_appScope->getPublicDir()
 		);
 	}
