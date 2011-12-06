@@ -4,9 +4,8 @@ namespace Controller;
 class Index extends \Kifs\Controller\Action
 {
 
-	public function _dispatch()
+	public function _preRendering()
 	{
-
 	}
 
 }

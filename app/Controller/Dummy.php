@@ -17,7 +17,7 @@ class Dummy extends \Kifs\Controller\Action
 		$this->_dummyDao = $dummyDao;
 	}
 
-	public function _dispatch()
+	public function _preRendering()
 	{
 		$this->_view->messages = $this->_dummyDao->getMessagesByUser('alfwed');
 	}
