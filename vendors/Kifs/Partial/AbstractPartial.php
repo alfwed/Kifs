@@ -44,7 +44,7 @@ abstract class AbstractPartial
 	{
 		$this->_extract($params);
 
-		$this->_render();
+		$this->_preRendering();
 
 		ob_start();
 		include $this->_templateDir.'/Partial/'.$this->_getFormatedTemplateName();

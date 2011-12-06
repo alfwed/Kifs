@@ -31,7 +31,7 @@ abstract class Action
 	{
 		$this->_request = $request;
 
-		$this->_dispatch();
+		$this->_preRendering();
 
 		$templateName = $this->_getFormatedTemplateName();
 		$this->_response->appendContent($this->_view->fetch($templateName));
