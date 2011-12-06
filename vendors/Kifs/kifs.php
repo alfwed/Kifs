@@ -1,7 +1,7 @@
 <?php
 
 $options = array(
-	'kickstart' => 'Generate application directory. args : <app_name> <app_dir>'
+	'kifstart' => 'Generate application directory. args : <app_name> <app_dir>'
 );
 
 function showUsage($options)
@@ -25,7 +25,7 @@ if (!isset($argv[0], $options[$argv[0]])) {
 }
 
 switch ($argv[0]) {
-	case 'kickstart':
+	case 'kifstart':
 		if (!isset($argv[1], $argv[2]))
 			showUsage($options);
 
