@@ -1,6 +1,9 @@
 <?php
 namespace Kifs\Application;
-
+/**
+ * TODO Maybe create a Context class for env, country and language
+ * TODO Maybe create a ConfigLoader class
+ */
 class Scope
 {
 	/**

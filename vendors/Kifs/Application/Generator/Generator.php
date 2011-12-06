@@ -1,6 +1,9 @@
 <?php
 namespace Kifs\Application\Generator;
 
+/**
+ * TODO maybe delete $appName parameter
+ */
 class Generator
 {
 	/**
