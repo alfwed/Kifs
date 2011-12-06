@@ -4,6 +4,7 @@
  *
  * TODO update templates for the generator - controller/partial
  * TODO logger
+ * TODO benchmark
  */
 
 error_reporting(E_ALL);
