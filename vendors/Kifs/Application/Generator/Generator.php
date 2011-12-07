@@ -29,7 +29,7 @@ class Generator
 		$this->_appName = $appName;
 
 		if ('/' == substr($rootDir, strlen($rootDir)-1))
-			$rootDir = substr($rootDir, 0, -1);
+			$rootDir = rtrim($rootDir, '/');
 
 		$appDir = $rootDir.'/'.strtolower($appName);
 
