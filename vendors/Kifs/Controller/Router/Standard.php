@@ -14,7 +14,7 @@ class Standard
 	 *
 	 * @var array
 	 */
-	private $routes;
+	private $_routes;
 
 
 	/**
