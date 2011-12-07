@@ -1,6 +1,9 @@
 <?php
 namespace Kifs\Db;
 
+/**
+ * FIXME Hide class constants : return 'inject'.str_replace('\\', '', $controllerName);
+ */
 class MysqlPDO implements Connection
 {
 	const FETCH_ASSOC = \PDO::FETCH_ASSOC;

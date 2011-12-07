@@ -52,7 +52,7 @@ $errorHandler = $appInjector->injectErrorHanlder();
 $errorHandler->start();
 
 // Init database connections
-//$appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection('master'));
+$appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection('master'));
 
 // Init Router
 $router = $appInjector->injectRouter();

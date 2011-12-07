@@ -3,16 +3,36 @@ namespace Kifs\View\Helper;
 
 class Url
 {
+	/**
+	 * Contains all the custom routes of the application
+	 * Array of \Kifs\Controller\Router\Route
+	 *
+	 * @var array
+	 */
 	private $_routes;
 
+	/**
+	 * Stores the URL mapping to a controller for faster access
+	 *
+	 * @var array
+	 */
 	private $_cachedRoutes = array();
 
 
+	/**
+	 * @param array $routes
+	 */
 	public function __construct($routes)
 	{
 		$this->_routes = $routes;
 	}
 
+	/**
+	 * Returns the URL mapping to the controller $controller
+	 *
+	 * @param string $controller
+	 * @param array $params
+	 */
 	public function getUrl($controller, $params = array())
 	{
 		// TODO improve caching - cache parameterize urls
