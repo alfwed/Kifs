@@ -28,22 +28,15 @@ class Standard
 	/**
 	 * Add a route to a controller
 	 *
-	 * Expected arguments :
-	 * 		uri : /plop/foo/:page/bar
-	 *		controllerName : Foo\Bar
-	 * 		params : array(':paramname' => 'int')
-	 *
-	 * @param string $uri Pattern of uri
-	 * @param string $controllerName fully qualified name without the 'Controller' namespace
-	 * @param array $params Types of the uri parameters if any
+	 * @param Route $route
 	 * @return void
 	 */
-	public function addRoute($uri, $controllerName, $params = array())
+	public function addRoute($route)
 	{
 		$this->_routes[] = array(
-			'uri' => $uri,
-			'controller' => $controllerName,
-			'params' => $params
+			'uri' => $route->getUri(),
+			'controller' => $route->getControllerName(),
+			'params' => $route->getParams()
 		);
 	}
 
@@ -84,11 +77,7 @@ class Standard
 	{
 		foreach ($config as $route) {
 			/* @var $route \Kifs\Controller\Router\Route */
-			$this->addRoute(
-				$route->getUri(),
-				$route->getControllerName(),
-				$route->getParams()
-			);
+			$this->addRoute($route);
 		}
 	}
 
