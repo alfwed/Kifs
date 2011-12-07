@@ -61,14 +61,4 @@ class Application
 		$response->send();
 	}
 
-	/**
-	 * Returns the name of the factory method to call to instanciate the
-	 * controller named $controllerName
-	 *
-	 * @param string $controllerName
-	 */
-	private static function _getControllerInjectorMethod($controllerName)
-	{
-		return 'inject'.str_replace('\\', '', $controllerName);
-	}
 }
