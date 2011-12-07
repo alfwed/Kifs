@@ -21,7 +21,7 @@ class Application
 
 	/**
 	 * @param \Kifs\Controller\Router\Standard $router
-	 * @param \Injector\Controller $controllerFactory
+	 * @param \Kifs\Injector\Controller $controllerFactory
 	 * @param \Kifs\Injector\Application $appFactory
 	 */
 	public function __construct($router, $controllerFactory, $appFactory)
@@ -42,12 +42,8 @@ class Application
 		$controllerName = $request->getControllerName();
 
 		try {
-			$reflectionClass = new \ReflectionMethod(
-				$this->_controllerFactory,
-				self::_getControllerInjectorMethod($controllerName)
-			);
-			$controller = $reflectionClass->invoke($this->_controllerFactory);
-		} catch (\ReflectionException $e) {
+			$controller = $this->_controllerFactory->get($controllerName);
+		} catch (\Exception $e) {
 			if ($request->isDispatched()) {
 				throw new \Exception('Controller Error404 does not exists');
 			}
