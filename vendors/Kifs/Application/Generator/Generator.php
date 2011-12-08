@@ -1,9 +1,6 @@
 <?php
 namespace Kifs\Application\Generator;
 
-/**
- * TODO maybe delete $appName parameter
- */
 class Generator
 {
 	/**
@@ -24,9 +21,9 @@ class Generator
 	 * @param string $appName
 	 * @param string $rootDir
 	 */
-	public function generate($appName, $rootDir)
+	public function generate($rootDir)
 	{
-		$this->_appName = $appName;
+		$this->_appName = 'app';
 
 		if ('/' == substr($rootDir, strlen($rootDir)-1))
 			$rootDir = rtrim($rootDir, '/');

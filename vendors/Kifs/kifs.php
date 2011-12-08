@@ -26,11 +26,11 @@ if (!isset($argv[0], $options[$argv[0]])) {
 
 switch ($argv[0]) {
 	case 'kifstart':
-		if (!isset($argv[1], $argv[2]))
+		if (!isset($argv[1]))
 			showUsage($options);
 
 		require 'Application/Generator/Generator.php';
 		$gen = new \Kifs\Application\Generator\Generator();
-		$gen->generate($argv[1], $argv[2]);
+		$gen->generate($argv[1]);
 		break;
 }
