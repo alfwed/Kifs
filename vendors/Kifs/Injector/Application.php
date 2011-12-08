@@ -1,6 +1,8 @@
 <?php
 namespace Kifs\Injector;
 
+use Kifs\Application\ConfigLoader;
+
 class Application
 {
 	/**
@@ -29,6 +31,19 @@ class Application
 		$this->_appScope = $appScope;
 		$this->_partialInjector = $partialInjector;
 		$this->_businessInjector = $businessInjector;
+	}
+
+	public function injectConfigLoader()
+	{
+		return new \Kifs\Application\ConfigLoader(
+			$this->_appScope->getEnv(),
+			$this->_appScope->getPath()
+		);
+	}
+
+	public function injectPath($rootDir)
+	{
+		return new \Kifs\Application\Path($rootDir);
 	}
 
 	public function injectErrorHanlder()

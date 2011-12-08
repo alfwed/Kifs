@@ -1,10 +1,11 @@
 <?php
 /*
- * This is where all the glue code goes.
+ * This is where all the glue code goes. If ou like magic tricks, put them here.
  *
  * TODO update templates for the generator - controller/partial
  * TODO logger
  * TODO benchmark
+ * TODO create exception classes
  */
 
 error_reporting(E_ALL);
@@ -46,6 +47,12 @@ $modelInjector = new Injector\Model($appScope);
 $businessInjector = new Injector\Business($appScope);
 $appInjector = new Kifs\Injector\Application($appScope, $partialInjector, $businessInjector);
 $controllerInjector = new Injector\Controller($appScope, $modelInjector, $businessInjector);
+
+// Set Path
+$appScope->setPath($appInjector->injectPath(realpath(__DIR__.'/..')));
+
+// Set ConfigLoader
+$appScope->setConfigLoader($appInjector->injectConfigLoader());
 
 // Init error handler
 $errorHandler = $appInjector->injectErrorHanlder();

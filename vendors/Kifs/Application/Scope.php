@@ -1,11 +1,22 @@
 <?php
 namespace Kifs\Application;
+
 /**
  * TODO Maybe create a Context class for env, country and language
- * TODO Maybe create a ConfigLoader class
  */
 class Scope
 {
+	/**
+	 * @var \Kifs\Application\ConfigLoader
+	 */
+	private $_configLoader;
+
+	/**
+	 * @var \Kifs\Application\Path
+	 */
+	private $_path;
+
+
 	/**
 	 * @var array
 	 */
@@ -32,29 +43,6 @@ class Scope
 	 * @var array
 	 */
 	private $_databases;
-
-
-	/**
-	 * @var string
-	 */
-	private $_appDir;
-
-	/**
-	 * @var string
-	 */
-	private $_tplDir;
-
-	/**
-	 * @var string
-	 */
-	private $_publicDir;
-
-	/**
-	 * Array of config files
-	 *
-	 * @var array
-	 */
-	private $_configs;
 
 
 	/**
@@ -131,6 +119,26 @@ class Scope
 	}
 
 	/**
+	 * Set the loader to use to load
+	 *
+	 * @param ConfigLoader $loader
+	 */
+	public function setConfigLoader($loader)
+	{
+		$this->_configLoader = $loader;
+	}
+
+	public function getPath()
+	{
+		return $this->_path;
+	}
+
+	public function setPath($path)
+	{
+		$this->_path = $path;
+	}
+
+	/**
 	 * Returns the db connection stored as $name
 	 *
 	 * @param string $name
@@ -162,92 +170,34 @@ class Scope
 	/**
 	 * Returns the path to the application directory
 	 *
+	 * @deprecated
 	 * @return string
 	 */
 	public function getAppDir()
 	{
-		return $this->_appDir;
-	}
-
-	/**
-	 * Sets the path to the application directory
-	 *
-	 * @param string $appDir
-	 * @return void
-	 */
-	public function setAppDir($appDir)
-	{
-		$this->_appDir = $appDir;
+		return $this->_path->getAppDir();
 	}
 
 	/**
 	 * Returns the path to the template directory
 	 *
+	 * @deprecated
 	 * @return string
 	 */
 	public function getTemplateDir()
 	{
-		return $this->_tplDir;
-	}
-
-	/**
-	 * Sets the path to the template directory
-	 *
-	 * @param string $tplDir
-	 * @return void
-	 */
-	public function setTemplateDir($tplDir)
-	{
-		$this->_tplDir = $tplDir;
+		return $this->_path->getTemplateDir();
 	}
 
 	/**
 	 * Returns the path to the public directory
 	 *
+	 * @deprecated
 	 * @return string
 	 */
 	public function getPublicDir()
 	{
-		return $this->_publicDir;
-	}
-
-	/**
-	 * Sets the path to the public directory
-	 *
-	 * @param string $dir
-	 * @return void
-	 */
-	public function setPublicDir($dir)
-	{
-		$this->_publicDir = $dir;
-	}
-
-	/**
-	 * Retrieves and stores the config file named $name
-	 *
-	 * @throws\Exception
-	 * @param string $name
-	 * @return void
-	 */
-	public function loadConfig($name)
-	{
-		if (isset($this->_configs[$name]))
-			return;
-
-		// Make these 3 variables  visible into the config files
-		$appDir = $this->getAppDir();
-		$tplDir = $this->getTemplateDir();
-		$publicDir = $this->getPublicDir();
-
-		$filenameCommon = $appDir.'/Config/'.$name.'.php';
-		$filenameEnv = $appDir.'/Config/'.$this->getEnv().'/'.$name.'.php';
-
-		if (file_exists($filenameCommon))
-			$this->_configs[$name] = include $filenameCommon;
-		elseif(file_exists($filenameEnv))
-			$this->_configs[$name] = include $filenameEnv;
-		else
-			throw new \Exception('Config file for "'.$name.'" does not exist');
+		return $this->_path->getPublicDir();
 	}
 
 	/**
@@ -313,6 +263,17 @@ class Scope
 		$this->_language = $language;
 	}
 
+	/**
+	 * Retrieves and stores the config file named $name
+	 *
+	 * @throws\Exception
+	 * @param string $name
+	 * @return void
+	 */
+	public function loadConfig($name)
+	{
+		$this->_configLoader->load($name);
+	}
 
 	/**
 	 * Returns the config for $name
@@ -322,10 +283,7 @@ class Scope
 	 */
 	public function getConfigs($name)
 	{
-		if (isset($this->_configs[$name]))
-			return $this->_configs[$name];
-
-		return null;
+		return $this->_configLoader->getConfigs($name);
 	}
 
 	/**
@@ -337,10 +295,7 @@ class Scope
 	 */
 	public function getConfig($name, $key)
 	{
-		if (isset($this->_configs[$name][$key]))
-			return $this->_configs[$name][$key];
-
-		return null;
+		return $this->_configLoader->getConfig($name, $key);
 	}
 
 	public function registerInstance($name, $obj)
