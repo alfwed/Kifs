@@ -64,7 +64,7 @@ abstract class Action
 	/**
 	 * Called before rendering the view. This is where you do all your business.
 	 */
-	abstract protected function _preRendering(); // FIXME find name for _preRendering()
+	abstract protected function _preRendering();
 
 	/**
 	 * Returns the name of the template corresponding to this controller

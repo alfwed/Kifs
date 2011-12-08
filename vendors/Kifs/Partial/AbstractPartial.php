@@ -68,21 +68,9 @@ abstract class AbstractPartial
 	 * Core of the partial. This is where you call business objects and
 	 * assign data to the view
 	 *
-	 * What does the method do?
-	 * - Retrieves data from some models
-	 * - Assign data to the view
-	 *
-	 * Names :
-	 *  - retrieveDataAndAssignToView
-	 *  - fetchData
-	 *  - retrieveData
-	 *  - preRendering
-	 *  - prepare
-	 *  - prepareData
-	 *
 	 * @return void
 	 */
-	abstract protected function _preRendering(); // FIXME find name for _preRendering()
+	abstract protected function _preRendering();
 
 	/**
 	 * Returns the name of the template corresponding to this controller
