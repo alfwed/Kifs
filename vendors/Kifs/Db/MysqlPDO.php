@@ -1,9 +1,6 @@
 <?php
 namespace Kifs\Db;
 
-/**
- * FIXME Hide class constants : function getFetchMode($kifs_fetch_mode)
- */
 class MysqlPDO implements Connection
 {
 	/**
