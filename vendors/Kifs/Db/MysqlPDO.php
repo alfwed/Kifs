@@ -2,12 +2,10 @@
 namespace Kifs\Db;
 
 /**
- * FIXME Hide class constants : return 'inject'.str_replace('\\', '', $controllerName);
+ * FIXME Hide class constants : function getFetchMode($kifs_fetch_mode)
  */
 class MysqlPDO implements Connection
 {
-	const FETCH_ASSOC = \PDO::FETCH_ASSOC;
-
 	/**
 	 * @var PDO
 	 */
@@ -27,12 +25,14 @@ class MysqlPDO implements Connection
 			throw new \Kifs\Db\ConnectionException($e->getMessage());
 		}
 
-		$this->_con->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, MysqlPDO::FETCH_ASSOC);
+		$this->_con->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,
+				$this->getFetchMode(Connection::FETCH_ASSOC));
 	}
 
-	public function query($sql, $fetchMode = MysqlPDO::FETCH_ASSOC)
+	public function query($sql, $fetchMode = Connection::FETCH_ASSOC)
 	{
-		return new \Kifs\Db\Statement\MysqlPDO($this->_con->query($sql, $fetchMode));
+		return new \Kifs\Db\Statement\MysqlPDO($this->_con->query($sql,
+				$this->getFetchMode($fetchMode)));
 	}
 
 	public function exec($sql)
@@ -43,6 +43,18 @@ class MysqlPDO implements Connection
 	public function prepare($sql)
 	{
 		return new \Kifs\Db\Statement\MysqlPDO($this->_con->prepare($sql));
+	}
+
+	public static function getFetchMode($connectionFetchMode)
+	{
+		switch ($connectionFetchMode) {
+			case Connection::FETCH_ASSOC:
+				return PDO::FETCH_ASSOC;
+			case Connection::FETCH_BOTH:
+				return PDO::FETCH_BOTH;
+			default:
+				throw new \Exception('Unknown fetch mode "'.$connectionFetchMode.'"');
+		}
 	}
 
 }

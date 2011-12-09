@@ -3,6 +3,11 @@ namespace Kifs\Db;
 
 interface Connection
 {
+	const FETCH_ASSOC = 1;
+
+	const FETCH_BOTH = 2;
+
+
 	/**
 	 * Open a connection to the database
 	 *

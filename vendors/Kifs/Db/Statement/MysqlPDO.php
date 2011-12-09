@@ -14,14 +14,14 @@ class MysqlPDO extends Statement
 		$this->_stmt->execute($params);
 	}
 
-	public function fetch($fetchMode = \Kifs\Db\MysqlPDO::FETCH_ASSOC)
+	public function fetch($fetchMode = \Kifs\Db\Connection::FETCH_ASSOC)
 	{
-		return $this->_stmt->fetch($fetchMode);
+		return $this->_stmt->fetch(\Kifs\Db\MysqlPDO::getFetchMode($fetchMode));
 	}
 
-	public function fetchAll($fetchMode = \Kifs\Db\MysqlPDO::FETCH_ASSOC)
+	public function fetchAll($fetchMode = \Kifs\Db\Connection::FETCH_ASSOC)
 	{
-		return $this->_stmt->fetchAll($fetchMode);
+		return $this->_stmt->fetchAll(\Kifs\Db\MysqlPDO::getFetchMode($fetchMode));
 	}
 
 }
