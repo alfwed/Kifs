@@ -1,8 +1,6 @@
 <?php
 namespace Kifs\Injector;
 
-use Kifs\Application\ConfigLoader;
-
 class Application
 {
 	/**

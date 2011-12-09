@@ -1,11 +1,13 @@
 <?php
 /*
- * This is where all the glue code goes. If ou like magic tricks, put them here.
+ * This is where all the glue code goes. If you like magic tricks, put them here.
  *
  * TODO update templates for the generator - controller/partial
+ *
  * TODO logger
  * TODO benchmark
  * TODO create exception classes
+ * TODO HTML trimer
  */
 
 error_reporting(E_ALL);
@@ -25,9 +27,6 @@ Kifs\Application\Autoloader::register();
 
 // Init application scope
 $appScope = new Kifs\Application\Scope($_POST, $_GET, $_COOKIE, $_SERVER);
-$appScope->setAppDir($appDir);
-$appScope->setTemplateDir($appDir.'/Template');
-$appScope->setPublicDir(__DIR__);
 
 // Set env
 $env = ucfirst(getenv('APP_ENV') ?: 'prod');

@@ -128,11 +128,22 @@ class Scope
 		$this->_configLoader = $loader;
 	}
 
+	/**
+	 * Returns the Path object
+	 *
+	 * @return \Kifs\Application\Path
+	 */
 	public function getPath()
 	{
 		return $this->_path;
 	}
 
+	/**
+	 * Set the Path object
+	 *
+	 * @param \Kifs\Application\Path $path
+	 * @return void
+	 */
 	public function setPath($path)
 	{
 		$this->_path = $path;
