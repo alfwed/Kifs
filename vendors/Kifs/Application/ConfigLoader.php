@@ -44,10 +44,10 @@ class ConfigLoader
 		// Make this variable visible into the config files
 		$path = $this->_path;
 
-		if (file_exists($this->_getCommonFilename($name)))
-			$this->_configs[$configName] = include $this->_getCommonFilename($name);
-		elseif (file_exists($this->_getEnvFilename($name)))
-			$this->_configs[$configName] = include $this->_getEnvFilename($name);
+		if (file_exists($this->_getCommonFilename($configName)))
+			$this->_configs[$configName] = include $this->_getCommonFilename($configName);
+		elseif (file_exists($this->_getEnvFilename($configName)))
+			$this->_configs[$configName] = include $this->_getEnvFilename($configName);
 		else
 			throw new \Exception('Config file for "'.$configName.'" does not exist');
 	}

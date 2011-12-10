@@ -46,9 +46,9 @@ class MysqlPDO implements Connection
 	{
 		switch ($connectionFetchMode) {
 			case Connection::FETCH_ASSOC:
-				return PDO::FETCH_ASSOC;
+				return \PDO::FETCH_ASSOC;
 			case Connection::FETCH_BOTH:
-				return PDO::FETCH_BOTH;
+				return \PDO::FETCH_BOTH;
 			default:
 				throw new \Exception('Unknown fetch mode "'.$connectionFetchMode.'"');
 		}
