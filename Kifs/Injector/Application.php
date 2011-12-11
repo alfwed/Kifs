@@ -115,10 +115,7 @@ class Application
 			$conf = array();
 		}
 
-		return new \Kifs\View\Helper\CssJs(
-			$conf,
-			$this->_appScope->getPublicDir()
-		);
+		return new \Kifs\View\Helper\CssJs($conf);
 	}
 
 	public function injectViewHelperUrl()

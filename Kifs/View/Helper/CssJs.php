@@ -5,13 +5,10 @@ class CssJs
 {
 	private $_config;
 
-	private $_publicDir;
 
-
-	public function __construct($config, $publicDir)
+	public function __construct($config)
 	{
 		$this->_config = $config;
-		$this->_publicDir = $publicDir;
 	}
 
 	public function getJsArray($controllerName)
@@ -22,7 +19,7 @@ class CssJs
 			return $js;
 
 		foreach ($this->_config[$controllerName]['js'] as $jsFile) {
-			$js[] = $this->_publicDir . '/' . $jsFile;
+			$js[] = '/js/' . $jsFile;
 		}
 
 		return $js;
@@ -36,7 +33,7 @@ class CssJs
 			return $css;
 
 		foreach ($this->_config[$controllerName]['css'] as $cssFile) {
-			$css[] = $this->_publicDir . '/' . $cssFile;
+			$css[] = '/css/' . $cssFile;
 		}
 
 		return $css;

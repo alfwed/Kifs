@@ -11,8 +11,7 @@
  * @var $conf array
  */
 
-$conf['dummy']['js'] = array('dummy.js');
-$conf['dummy']['css'] = array('dummy.css');
+$conf = array();
 
 return $conf;
 EOD;
