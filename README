@@ -1,3 +1,6 @@
-KIFS
+KIFS - Keep It Fucking Simple
 
-Lightweight simple PHP framework.
+Lightweight PHP framework.
+
+The framework is currently under development so its API may change in 
+the future. Do not use it in production environment.

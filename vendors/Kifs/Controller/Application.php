@@ -8,11 +8,22 @@ class Application
 	 */
 	private $_router;
 
+	/**
+	 * @var \Injector\Controller
+	 */
 	private $_controllerFactory;
 
+	/**
+	 * @var \Kifs\Injector\Application
+	 */
 	private $_appFactory;
 
 
+	/**
+	 * @param \Kifs\Controller\Router\Standard $router
+	 * @param \Kifs\Injector\Controller $controllerFactory
+	 * @param \Kifs\Injector\Application $appFactory
+	 */
 	public function __construct($router, $controllerFactory, $appFactory)
 	{
 		$this->_router = $router;
@@ -20,6 +31,10 @@ class Application
 		$this->_appFactory = $appFactory;
 	}
 
+	/**
+	 * @param \Kifs\Controller\Request\Http $request
+	 * @throws \Exception
+	 */
 	public function dispatch($request)
 	{
 		$this->_router->route($request);
@@ -27,12 +42,8 @@ class Application
 		$controllerName = $request->getControllerName();
 
 		try {
-			$reflectionClass = new \ReflectionMethod(
-				$this->_controllerFactory,
-				self::_getControllerInjectorMethod($controllerName)
-			);
-			$controller = $reflectionClass->invoke($this->_controllerFactory);
-		} catch (\ReflectionException $e) {
+			$controller = $this->_controllerFactory->get($controllerName);
+		} catch (\Exception $e) {
 			if ($request->isDispatched()) {
 				throw new \Exception('Controller Error404 does not exists');
 			}
@@ -50,8 +61,4 @@ class Application
 		$response->send();
 	}
 
-	private static function _getControllerInjectorMethod($controllerName)
-	{
-		return 'inject'.str_replace('\\', '', $controllerName);
-	}
 }

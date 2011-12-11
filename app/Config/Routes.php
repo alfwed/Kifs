@@ -1,6 +1,8 @@
 <?php
-/**
- * @var $router \Kifs\Controller\Router\Standard
- */
+use \Kifs\Controller\Router\Route;
 
-$router->addRoute('/alex', 'Alex');
+$conf[] = new Route('alf', 'Alex', array());
+$conf[] = new Route('/test', 'Alex', array());
+$conf[] = new Route('foo/:page/bar', 'Dummy', array(':page' => 'int'));
+
+return $conf;

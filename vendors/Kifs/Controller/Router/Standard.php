@@ -3,32 +3,40 @@ namespace Kifs\Controller\Router;
 
 class Standard
 {
-	private $routes;
+	/**
+	 *Array of routes
+	 *
+	 *	array(
+	 *		uri => /plop/foo/:page/bar
+	 *		controllerName => Foo\Bar
+	 * 		params => array(':paramname' => 'int')
+	 * 	)
+	 *
+	 * @var array
+	 */
+	private $_routes;
 
 
-	public function __construct()
+	/**
+	 * @param array $config array of Route
+	 */
+	public function __construct($config)
 	{
+		$this->_loadRoutesFromConfig($config);
 	}
 
 	/**
 	 * Add a route to a controller
 	 *
-	 * Expected arguments :
-	 * 		uri : /plop/foo/:page/bar
-	 *		controllerName : Foo\Bar
-	 * 		params : array(':paramname' => 'int')
-	 *
-	 * @param string $uri
-	 * @param string $controllerName fully qualified name without the 'Controller' namespace
-	 * @param string $controllerAction
-	 * @param array $params
+	 * @param Route $route
+	 * @return void
 	 */
-	public function addRoute($uri, $controllerName, $params = array())
+	public function addRoute($route)
 	{
 		$this->_routes[] = array(
-			'uri' => $uri,
-			'controller' => $controllerName,
-			'params' => $params
+			'uri' => $route->getUri(),
+			'controller' => $route->getControllerName(),
+			'params' => $route->getParams()
 		);
 	}
 
@@ -42,7 +50,7 @@ class Standard
 			return false;
 
 		$uri = $request->getServer('REQUEST_URI');
-		$uri = substr($uri, 1);
+		$uri = strtolower(substr($uri, 1));
 
 		if (!empty($this->_routes)) {
 			$this->_createUriPatterns($uri);
@@ -60,6 +68,24 @@ class Standard
 		return true;
 	}
 
+	/**
+	 * Retrieve router's configuration from the $config array
+	 *
+	 * @param array $config
+	 */
+	private function _loadRoutesFromConfig($config)
+	{
+		foreach ($config as $route) {
+			/* @var $route \Kifs\Controller\Router\Route */
+			$this->addRoute($route);
+		}
+	}
+
+	/**
+	 * Check if the request $request has already been routed
+	 *
+	 * @param \Kifs\Controller\Request\Http $request
+	 */
 	private function _requestAlreadyRouted($request)
 	{
 		$controllerName = $request->getControllerName();
@@ -69,6 +95,9 @@ class Standard
 		return true;
 	}
 
+	/**
+	 * Create regexp patterns for all the known routes
+	 */
 	private function _createUriPatterns()
 	{
 		foreach ($this->_routes as &$route) {
@@ -77,19 +106,20 @@ class Standard
 
 			if (!empty($route['params'])) {
 				foreach ($route['params'] as $name => $type) {
+					$params[] = '#'.$name.'#';
 					switch ($type) {
 						case 'int':
-							$patterns[] = '#[0-9]+#';
+							$patterns[] = '\d+';
 							break;
 						case 'string':
-							$patterns[] = '#[^/]+#';
+							$patterns[] = '[^/]+';
 							break;
 						default:
 							throw Exception('Unknow parameter type');
 					}
 				}
 
-				$route['uriPattern'] .= preg_replace($patterns, array_keys($route['params']), $route['uri']);
+				$route['uriPattern'] .= preg_replace($params, $patterns, $route['uri']);
 			} else {
 				$route['uriPattern'] .= $route['uri'];
 			}
@@ -97,10 +127,15 @@ class Standard
 		}
 	}
 
-	public function _getDefaultRoute($uri)
+	/**
+	 * Return the controller to call if the uri doesn't match any rule
+	 *
+	 * @param string $uri
+	 */
+	private function _getDefaultRoute($uri)
 	{
 		if (empty($uri))
-			return 'Index';
+			return 'index';
 
 		return str_replace('/', '\\', $uri);
 	}

@@ -3,17 +3,12 @@ namespace Kifs\Application;
 
 class Benchmarker
 {
-	private $_markers = array();
+	private static $_markers = array();
 
-	private $_parentMarker;
+	private static $_parentMarker;
 
 
-	public function __construct()
-	{
-
-	}
-
-	public function openMarker($name)
+	public static function openMarker($name)
 	{
 		$marker = array(
 			'name' => $name,
@@ -27,7 +22,7 @@ class Benchmarker
 		$this->_markers[] = $marker;
 	}
 
-	public function closeMarker($name)
+	public static function closeMarker($name)
 	{
 		$marker = array(
 			'name' => $name,
@@ -46,7 +41,7 @@ class Benchmarker
 		$this->_markers[] = $marker;
 	}
 
-	public function display()
+	public static function display()
 	{
 
 	}

@@ -1,27 +1,37 @@
 <?php
 namespace Kifs\Controller;
 
-class Action
+abstract class Action
 {
+	/**
+	 * @var \Kifs\Controller\Request\Http
+	 */
 	protected $_request;
 
+	/**
+	 * @var \Kifs\Controller\Response\Http
+	 */
 	protected $_response;
 
+	/**
+	 * @var \Kifs\View\View
+	 */
 	protected $_view;
+
 
 	public function __construct()
 	{
 	}
 
 	/**
-	 * @param Kifs\Controller\Request\Http $request
-	 * @return Kifs\Controller\Response\AbstractResponse
+	 * @param \Kifs\Controller\Request\Http $request
+	 * @return \Kifs\Controller\Response\Http
 	 */
 	public function dispatch($request)
 	{
 		$this->_request = $request;
 
-		$this->_dispatch();
+		$this->_preRendering();
 
 		$templateName = $this->_getFormatedTemplateName();
 		$this->_response->appendContent($this->_view->fetch($templateName));
@@ -29,25 +39,43 @@ class Action
 		return $this->_response;
 	}
 
+	/**
+	 * Set the response used by the controller
+	 *
+	 * @param \Kifs\Controller\Response\Http $response
+	 * @return void
+	 */
 	public function setResponse($response)
 	{
 		$this->_response = $response;
 	}
 
+	/**
+	 * Set the view used by the controller
+	 *
+	 * @param \Kifs\View\View $view
+	 * @return void
+	 */
 	public function setView($view)
 	{
 		$this->_view = $view;
 	}
 
-	protected function _dispatch()
-	{
-	}
+	/**
+	 * Called before rendering the view. This is where you do all your business.
+	 */
+	abstract protected function _preRendering();
 
+	/**
+	 * Returns the name of the template corresponding to this controller
+	 *
+	 * @return string
+	 */
 	private function _getFormatedTemplateName()
 	{
 		$names = explode('\\', get_class($this));
 		array_shift($names);
-		$templateName = implode('\\', $names);
+		$templateName = implode('/', $names);
 
 		return $templateName;
 	}

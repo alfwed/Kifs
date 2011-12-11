@@ -3,29 +3,74 @@ namespace Kifs\Application;
 
 class ErrorHandler
 {
+	/**
+	 * Pile of errors that have been catched
+	 *
+	 * @var array
+	 */
 	private $_errorStack = array();
 
+	/**
+	 * Flag if a fatal error occured
+	 *
+	 * @var bool
+	 */
 	private $_hasFatalError = false;
 
-
+	/**
+	 * Config - Display the error at the end of the script
+	 *
+	 * @var bool
+	 */
 	private $_showErrors = false;
 
+	/**
+	 * Config - Mail the errors at end of the script
+	 *
+	 * @var bool
+	 */
 	private $_mailErrors = false;
 
+	/**
+	 * Config - Template to display in case of a fatal error
+	 *
+	 * @var string
+	 */
 	private $_templateInternalError;
 
+	/**
+	 * Config - Template to use to display errors
+	 *
+	 * @var string
+	 */
 	private $_templateErrorFront;
 
+	/**
+	 * Config - Template to use when mailing the errors
+	 *
+	 * @var string
+	 */
 	private $_templateErrorMail;
 
+	/**
+	 * Config - Array of emails to which the mail will be sent
+	 *
+	 * @var array
+	 */
 	private $_mailErrorsTo = array();
 
 
+	/**
+	 * @param array $config Error handler config
+	 */
 	public function __construct($config)
 	{
 		$this->_loadConf($config);
 	}
 
+	/**
+	 * Start catching errors
+	 */
 	public function start()
 	{
 		set_error_handler(array($this, 'errorHdlr'));
@@ -33,7 +78,67 @@ class ErrorHandler
 		register_shutdown_function(array($this, 'shutdownCallback'));
 	}
 
-	private function _loadConf($config) // FIXME
+	/**
+	 * Function called when an error is catched
+	 *
+	 * @param int $errorType
+	 * @param string $msg
+	 * @param string $file
+	 * @param int $line
+	 */
+	public function errorHdlr($errorType, $msg, $file, $line)
+	{
+		$backtraces = array_reverse(debug_backtrace());
+		array_pop($backtraces);
+
+	    $this->_errorStack[] = array(
+	    	'type' => $errorType,
+	    	'message'	=> $msg,
+	    	'file'	=> $file,
+	    	'line'	=> $line,
+	    	'backtraces' => $backtraces
+	    );
+
+	    // Don't execute PHP internal error handler
+	    return true;
+	}
+
+	/**
+	 * Function called when an exception is catched
+	 *
+	 * @param \Exception $e
+	 */
+	public function exceptionHdlr($e)
+	{
+		$this->errorHdlr(E_ERROR, $e->getMessage(), $e->getFile(), $e->getLine());
+	}
+
+	/**
+	 * Function called at the end of the script
+	 */
+	public function shutdownCallback()
+	{
+		$error = error_get_last();
+
+		if (null === $error)
+			return;
+
+		if (in_array($error['type'], array(E_ERROR, E_USER_ERROR)))
+		{
+			$this->errorHdlr($error['type'], $error['message'], $error['file'], $error['line']);
+			$this->_hasFatalError = true;
+			require $this->_templateInternalError;
+		}
+
+		$this->_displayOrSendErrors();
+	}
+
+	/**
+	 * Retrieve configs from the config array $config
+	 *
+	 * @param array $config
+	 */
+	private function _loadConf($config)
 	{
 		if (empty($config) || !is_array($config))
 			throw new \UnexpectedValueException('Config array for ErrorHandler class was empty or invalid');
@@ -44,49 +149,14 @@ class ErrorHandler
 		}
 	}
 
-	public function errorHdlr($errorType, $msg, $file, $line)
-	{
-		$aBackTrace = array_reverse(debug_backtrace());
-		array_pop($aBackTrace);
-
-	    $this->_errorStack[] = array(
-	    	'iType' => $errorType,
-	    	'sMsg'	=> $msg,
-	    	'sFile'	=> $file,
-	    	'iLine'	=> $line,
-	    	'aBackTrace' => $aBackTrace
-	    );
-
-	    // Don't execute PHP internal error handler
-	    return true;
-	}
-
 	/**
-	 * @param \Exception $e
+	 * Send or mail the errors depending on class' config
 	 */
-	public function exceptionHdlr($e)
-	{
-		$this->errorHdlr(E_ERROR, $e->getMessage(), $e->getFile(), $e->getLine());
-	}
-
-	public function shutdownCallback()
-	{
-		$error = error_get_last();
-
-		if (null === $error)
-			return;
-
-		if (in_array($error['type'], array(E_ERROR, E_USER_ERROR)))
-		{
-			$this->errorHandlerCallback($error['type'], $error['message'], $error['file'], $error['line']);
-			$this->_hasFatalError = true;
-		}
-
-		$this->_displayOrSendErrors();
-	}
-
 	private function _displayOrSendErrors()
 	{
+		if (empty($this->_errorStack))
+			return;
+
 		if ($this->_showErrors)
 			$this->_displayErrors();
 
@@ -94,9 +164,11 @@ class ErrorHandler
 			$this->_mailErrors();
 	}
 
+	/**
+	 * Display the errors
+	 */
 	private function _displayErrors()
 	{
-		var_dump($this->_templateErrorFront);
 		if (!isset($this->_templateErrorFront))
 			return;
 
@@ -104,6 +176,9 @@ class ErrorHandler
 		require $this->_templateErrorFront;
 	}
 
+	/**
+	 * Mail the errors
+	 */
 	private function mailErrors()
 	{
 		if (!isset($this->_templateErrorMail))
@@ -116,6 +191,9 @@ class ErrorHandler
 		mail(implode(',', $this->_mailErrorsTo), $subject, $content);
 	}
 
+	/**
+	 * Returns the subject of the mail containing the errors
+	 */
 	private function _getMailSubject()
 	{
 		$subject = '[ErrorHanlder]';
@@ -128,6 +206,9 @@ class ErrorHandler
 	 	return $subject;
 	}
 
+	/**
+	 * Returns the content of the mail containing the errors
+	 */
 	private function _getMailContent()
 	{
 		ob_start();

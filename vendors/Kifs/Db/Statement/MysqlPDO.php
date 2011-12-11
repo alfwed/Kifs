@@ -1,32 +1,27 @@
 <?php
 namespace Kifs\Db\Statement;
 
-class MysqlPDO
+class MysqlPDO extends Statement
 {
 	/**
 	 * @var PDOStatement
 	 */
-	private $_stmt;
+	protected $_stmt;
 
-
-	public function __construct($stmt)
-	{
-		$this->_stmt = $stmt;
-	}
 
 	public function execute($params)
 	{
 		$this->_stmt->execute($params);
 	}
 
-	public function fetch($fetchMode = \Kifs\Db\Mysql::FETCH_ASSOC)
+	public function fetch($fetchMode = \Kifs\Db\Connection::FETCH_ASSOC)
 	{
-		$this->_stmt->fetch($fetchMode);
+		return $this->_stmt->fetch(\Kifs\Db\MysqlPDO::getFetchMode($fetchMode));
 	}
 
-	public function fetchAll($fetchMode = \Kifs\Db\Mysql::FETCH_ASSOC)
+	public function fetchAll($fetchMode = \Kifs\Db\Connection::FETCH_ASSOC)
 	{
-		$this->_stmt->fetchAll($fetchMode);
+		return $this->_stmt->fetchAll(\Kifs\Db\MysqlPDO::getFetchMode($fetchMode));
 	}
 
 }
