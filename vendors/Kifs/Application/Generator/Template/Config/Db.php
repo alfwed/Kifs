@@ -1,11 +1,14 @@
-<?php echo '<?php'; ?>
-
+<?php echo <<<'EOD'
+<?php
 
 $conf = array(
-	'host' => '127.0.0.1',
-	'login' => 'root',
-	'pass' => '',
-	'db' => 'database'
+	'master' => array(
+		'host' => 'localhost',
+		'login' => 'root',
+		'pass' => '',
+		'db' => 'database'
+	)
 );
 
 return $conf;
+EOD;

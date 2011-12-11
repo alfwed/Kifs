@@ -2,13 +2,8 @@
 <?php
 namespace Injector;
 
-class Controller
+class Controller extends \Kifs\Injector\Controller
 {
-	/**
-	 * @var \Kifs\Application\Scope
-	 */
-	private $_appScope;
-
 	/**
 	 * @var Model
 	 */
@@ -26,7 +21,7 @@ class Controller
 	 */
 	public function __construct($appScope, $modelInjector, $businessInjector)
 	{
-		$this->_appScope = $appScope;
+		parent::__construct($appScope);
 		$this->_modelInjector = $modelInjector;
 		$this->_businessInjector = $businessInjector;
 	}

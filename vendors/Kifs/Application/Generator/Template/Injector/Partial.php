@@ -1,5 +1,5 @@
-<?php echo '<?php'; ?>
-
+<?php echo <<<'EOD'
+<?php
 namespace Injector;
 
 class Partial extends \Kifs\Injector\Partial
@@ -8,3 +8,4 @@ class Partial extends \Kifs\Injector\Partial
 
 
 }
+EOD;

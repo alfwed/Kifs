@@ -1,15 +1,13 @@
-<?php echo '<?php'; ?>
-
+<?php echo <<<'EOD'
+<?php
 /*
- * This is where all the glue code goes.
+ * This is where all the glue code goes. If you like magic tricks, put them here.
  */
 
 error_reporting(E_ALL);
 
-/*
- * Feel free to rename the app directory as you like
- */
-$appDir = realpath(__DIR__.'/../<?php echo $this->_appName; ?>');
+
+$appDir = realpath(__DIR__.'/../app');
 
 // Init autoloader
 set_include_path($appDir.PATH_SEPARATOR.
@@ -21,33 +19,38 @@ Kifs\Application\Autoloader::register();
 
 // Init application scope
 $appScope = new Kifs\Application\Scope($_POST, $_GET, $_COOKIE, $_SERVER);
-$appScope->setAppDir($appDir);
-$appScope->setTemplateDir($appDir.'/Template');
-$appScope->setPublicDir(__DIR__);
 
 // Set env
 $env = ucfirst(getenv('APP_ENV') ?: 'prod');
 $appScope->setEnv($env);
 
+// Set country
+$country = getenv('APP_COUNTRY') ?: 'default';
+$appScope->setCountry($country);
+
+// Set language
+$lang = getenv('APP_LANG') ?: 'default';
+$appScope->setLanguage($lang);
+
 // Init injectors
 $partialInjector = new Injector\Partial($appScope);
-$appInjector = new Kifs\Injector\Application($appScope, $partialInjector);
 $modelInjector = new Injector\Model($appScope);
 $businessInjector = new Injector\Business($appScope);
+$appInjector = new Kifs\Injector\Application($appScope, $partialInjector, $businessInjector);
 $controllerInjector = new Injector\Controller($appScope, $modelInjector, $businessInjector);
+
+// Set Path
+$appScope->setPath($appInjector->injectPath(realpath(__DIR__.'/..')));
+
+// Set ConfigLoader
+$appScope->setConfigLoader($appInjector->injectConfigLoader());
 
 // Init error handler
 $errorHandler = $appInjector->injectErrorHanlder();
 $errorHandler->start();
 
 // Init database connections
-$appScope->loadConfig('Db');
-$appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection(
-	$appScope->getConfig('Db', 'host'),
-	$appScope->getConfig('Db', 'login'),
-	$appScope->getConfig('Db', 'pass'),
-	$appScope->getConfig('Db', 'db')
-));
+//$appScope->addDbConnection('master', $appInjector->injectMysqlDbConnection('master'));
 
 // Init Router
 $router = $appInjector->injectRouter();
@@ -57,3 +60,6 @@ $app = $appInjector->injectControllerApplication($router, $controllerInjector);
 
 // Run app
 $app->dispatch($appInjector->injectRequest());
+
+EOD;
+

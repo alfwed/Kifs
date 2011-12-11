@@ -1,7 +1,7 @@
 <?php
 
 $options = array(
-	'kifstart' => 'Generate application directory. args : <app_name> <app_dir>'
+	'kifstart' => 'Generate application directory. args : <app_dir>'
 );
 
 function showUsage($options)

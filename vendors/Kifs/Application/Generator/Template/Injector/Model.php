@@ -1,5 +1,5 @@
-<?php echo '<?php'; ?>
-
+<?php echo <<<'EOD'
+<?php
 namespace Injector;
 
 class Model
@@ -19,3 +19,4 @@ class Model
 	}
 
 }
+EOD;

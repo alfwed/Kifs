@@ -1,7 +1,6 @@
-<?php
-echo <<<'EOD'
+<?php echo <<<'EOD'
 <?php foreach ($errors as $error): ?>
-<div style="background-color:#ffc;border:1px solid #f44;margin:10px 0;">
+<div style="background-color:#ffc;border:1px solid #f44;margin:10px;">
 	<table style="width:100%;border:1px solid #f44;">
 		<tr style="font-weight:bold;">
 			<td colspan="5"><?php echo $error['message'] . ' in ' . $error['file'] .

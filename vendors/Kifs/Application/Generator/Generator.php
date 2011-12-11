@@ -28,7 +28,7 @@ class Generator
 		if ('/' == substr($rootDir, strlen($rootDir)-1))
 			$rootDir = rtrim($rootDir, '/');
 
-		$appDir = $rootDir.'/'.strtolower($appName);
+		$appDir = $rootDir.'/'.strtolower($this->_appName);
 
 		// App
 		$this->_mkdir($appDir);
@@ -45,6 +45,9 @@ class Generator
 		$this->_genFile($appDir.'/Config/Dev/CssJs.php', 'Config/CssJs.php');
 		$this->_genFile($appDir.'/Config/Prod/CssJs.php', 'Config/CssJs.php');
 		$this->_genFile($appDir.'/Config/Test/CssJs.php', 'Config/CssJs.php');
+		$this->_genFile($appDir.'/Config/Dev/ErrorHandler.php', 'Config/Dev/ErrorHandler.php');
+		$this->_genFile($appDir.'/Config/Prod/ErrorHandler.php', 'Config/Prod/ErrorHandler.php');
+		$this->_genFile($appDir.'/Config/Test/ErrorHandler.php', 'Config/Test/ErrorHandler.php');
 
 		// App - Controller
 		$this->_mkdir($appDir.'/Controller');
@@ -53,15 +56,16 @@ class Generator
 
 		// App - Injector
 		$this->_mkdir($appDir.'/Injector');
-		$this->_genFile($appDir.'/Injector/Application', 'Injector/Application.php');
-		$this->_genFile($appDir.'/Injector/Business', 'Injector/Business.php');
-		$this->_genFile($appDir.'/Injector/Controller', 'Injector/Controller.php');
-		$this->_genFile($appDir.'/Injector/Model', 'Injector/Model.php');
-		$this->_genFile($appDir.'/Injector/Partial', 'Injector/Partial.php');
+		$this->_genFile($appDir.'/Injector/Application.php', 'Injector/Application.php');
+		$this->_genFile($appDir.'/Injector/Business.php', 'Injector/Business.php');
+		$this->_genFile($appDir.'/Injector/Controller.php', 'Injector/Controller.php');
+		$this->_genFile($appDir.'/Injector/Model.php', 'Injector/Model.php');
+		$this->_genFile($appDir.'/Injector/Partial.php', 'Injector/Partial.php');
 
 		// App - Lang
 		$this->_mkdir($appDir.'/Lang');
 		$this->_mkdir($appDir.'/Lang/default');
+		$this->_genFile($appDir.'/Lang/default/default.php', 'Lang/default.php');
 
 		// App - Model
 		$this->_mkdir($appDir.'/Model');
