@@ -37,8 +37,8 @@ class Route
 	 */
 	public function __construct($uri, $controllerName, $params)
 	{
-		$this->_uri = $uri;
-		$this->_controllerName = $controllerName;
+		$this->_uri = $this->_cleanUri($uri);
+		$this->_controllerName = $this->_cleanControllerName($controllerName);
 		$this->_params = $params;
 	}
 
@@ -57,4 +57,13 @@ class Route
 		return $this->_params;
 	}
 
+	private function _cleanUri($uri)
+	{
+		return trim($uri, '/');
+	}
+
+	private function _cleanControllerName($controllerName)
+	{
+		return strtolower($controllerName);
+	}
 }

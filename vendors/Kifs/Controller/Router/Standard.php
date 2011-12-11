@@ -50,7 +50,7 @@ class Standard
 			return false;
 
 		$uri = $request->getServer('REQUEST_URI');
-		$uri = substr($uri, 1);
+		$uri = strtolower(substr($uri, 1));
 
 		if (!empty($this->_routes)) {
 			$this->_createUriPatterns($uri);
@@ -135,7 +135,7 @@ class Standard
 	private function _getDefaultRoute($uri)
 	{
 		if (empty($uri))
-			return 'Index';
+			return 'index';
 
 		return str_replace('/', '\\', $uri);
 	}
