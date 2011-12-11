@@ -1,7 +1,4 @@
 <?php
-require 'Kifs/Controller/Router/Standard.php';
-require 'Kifs/Controller/Router/Route.php';
-require 'Kifs/Controller/Request/Http.php';
 
 class RouterTest extends PHPUnit_Framework_TestCase
 {
