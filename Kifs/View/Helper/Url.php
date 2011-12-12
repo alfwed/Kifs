@@ -12,6 +12,13 @@ class Url
 	private $_routes;
 
 	/**
+	 * Root url of the website
+	 *
+	 * @var string
+	 */
+	private $_rootUrl;
+
+	/**
 	 * Stores the URL mapping to a controller for faster access
 	 *
 	 * @var array
@@ -22,9 +29,10 @@ class Url
 	/**
 	 * @param array $routes
 	 */
-	public function __construct($routes)
+	public function __construct($routes, $rootUrl)
 	{
 		$this->_routes = $routes;
+		$this->_rootUrl = $rootUrl;
 	}
 
 	/**
@@ -35,7 +43,6 @@ class Url
 	 */
 	public function getUrl($controller, $params = array())
 	{
-		// TODO improve caching - cache parameterize urls
 		if (empty($params) && isset($this->_cachedRoutes[$controller]))
 			return $this->_cachedRoutes[$controller];
 
@@ -52,11 +59,11 @@ class Url
 					$uri = preg_replace($binds, $values, $uri);
 				}
 
-				return $uri;
+				return $this->_rootUrl.$uri;
 			}
 		}
 
-		return $controller;
+		return $this->_rootUrl.$controller;
 	}
 
 }

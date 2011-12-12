@@ -121,7 +121,18 @@ class Application
 	public function injectViewHelperUrl()
 	{
 		$this->_appScope->loadConfig('Routes');
-		return new \Kifs\View\Helper\Url($this->_appScope->getConfigs('Routes'));
+		$this->_appScope->loadConfig('Url');
+
+		$rootUrl = $this->_appScope->getConfig('Url', $this->_appScope->getCountry());
+
+		if (null === $rootUrl) {
+			$rootUrl = $this->_appScope->getConfig('Url', 'default');
+		}
+
+		return new \Kifs\View\Helper\Url(
+			$this->_appScope->getConfigs('Routes'),
+			$rootUrl
+		);
 	}
 
 	public function injectViewHelperTranslation()
