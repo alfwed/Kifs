@@ -3,6 +3,8 @@ namespace Kifs\View\Helper;
 
 class CssJs
 {
+	const COMMON_FILES_INDEX = '_common';
+
 	private $_config;
 
 
@@ -14,6 +16,12 @@ class CssJs
 	public function getJsArray($controllerName)
 	{
 		$js = array();
+
+		if ($this->_indexIsArray(self::COMMON_FILES_INDEX, 'js')) {
+			foreach ($this->_config[self::COMMON_FILES_INDEX]['js'] as $jsFile) {
+				$js[] = '/js/' . $jsFile;
+			}
+		}
 
 		if (!$this->_indexIsArray($controllerName, 'js'))
 			return $js;
@@ -28,6 +36,12 @@ class CssJs
 	public function getCssArray($controllerName)
 	{
 		$css = array();
+
+		if ($this->_indexIsArray(self::COMMON_FILES_INDEX, 'css')) {
+			foreach ($this->_config[self::COMMON_FILES_INDEX]['css'] as $cssFile) {
+				$css[] = '/css/' . $cssFile;
+			}
+		}
 
 		if (!$this->_indexIsArray($controllerName, 'css'))
 			return $css;
