@@ -1,6 +1,6 @@
 <?php
 
-class RouterTest extends PHPUnit_Framework_TestCase
+class StandardTest extends PHPUnit_Framework_TestCase
 {
 	private $_router;
 
