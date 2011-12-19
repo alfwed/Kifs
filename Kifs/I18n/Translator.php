@@ -28,24 +28,19 @@ class Translator
 	 * Return the translation corresponding to the given $key key. If no
 	 * matching translation is found, it will return the key.
 	 *
-	 * @param string $country Translation for this country
-	 * @param string $lang Translation for this language
 	 * @param string $key Key of the translation
-	 * @param string $plural Returns plural translation
+	 * @param int $plural Returns plural translation
 	 * @return string
 	 */
-	public function getTranslation($country, $lang, $key, $plural)
+	public function getTranslation($key, $plural)
 	{
 		if (!isset($this->_translations[$key]))
 			return $this->_noTranslation($key);
 
-		$plural = (int) ((bool)$plural);
+		$plural = $this->_getPluralKey($plural);
 
 		if (isset($this->_translations[$key][$plural]))
 			return $this->_translations[$key][$plural];
-
-		if (isset($this->_translations[$key][0]))
-			return $this->_translations[$key][0];
 
 		return $this->_noTranslation($key);
 	}
@@ -59,6 +54,14 @@ class Translator
 	private function _noTranslation($key)
 	{
 		return '###'.$key.'###';
+	}
+
+	private function _getPluralKey($plural)
+	{
+		if (0 < $plural)
+			$plural--;
+
+		return (int) ((bool)$plural);
 	}
 
 }
