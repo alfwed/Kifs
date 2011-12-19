@@ -50,20 +50,34 @@ class Url
 			/* @var $route \Kifs\Controller\Router\Route */
 			if ($route->getControllerName() == $controller) {
 				$uri = $route->getUri();
-				if (empty($params)) {
+				if (empty($params))
 					$this->_cachedRoutes[$controller] = $uri;
-				} else {
-					$binds = array_map(function($v){
-								return '#'.$v.'#';}, array_keys($params));
-					$values = array_values($params);
-					$uri = preg_replace($binds, $values, $uri);
-				}
+				else
+					$uri = self::_getParameterizedUri($uri, $params);
 
-				return $this->_rootUrl.$uri;
+				return $this->_getFullUrl($uri);
 			}
 		}
 
-		return $this->_rootUrl.$controller;
+		return $this->_getFullUrl($this->_controllerToUri($controller));
+	}
+
+	private static function _getParameterizedUri($uri, $params)
+	{
+		$binds = array_map(function($v){
+					return '#'.$v.'#';}, array_keys($params));
+		$values = array_values($params);
+		return preg_replace($binds, $values, $uri);
+	}
+
+	private function _controllerToUri($controller)
+	{
+		return str_replace('\\', '/', $controller);
+	}
+
+	private function _getFullUrl($uri)
+	{
+		return $this->_rootUrl.$uri;
 	}
 
 }
