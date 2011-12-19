@@ -31,6 +31,13 @@ class Path
 	 */
 	private $_tplDir;
 
+	/**
+	 * Path to the cache directory
+	 *
+	 * @var unknown_type
+	 */
+	private $_cacheDir;
+
 
 	/**
 	 * @param string $rootDir
@@ -41,6 +48,7 @@ class Path
 		$this->_appDir = $this->_rootDir . '/app';
 		$this->_publicDir = $this->_rootDir . '/public';
 		$this->_tplDir = $this->_appDir . '/Template';
+		$this->_cacheDir = $this->_rootDir . '/cache';
 	}
 
 	/**
@@ -114,5 +122,15 @@ class Path
 	public function setPublicDir($dir)
 	{
 		$this->_publicDir = $dir;
+	}
+
+	public function getCacheDir()
+	{
+		return $this->_cacheDir;
+	}
+
+	public function setCacheDir($dir)
+	{
+		$this->_cacheDir = $dir;
 	}
 }
