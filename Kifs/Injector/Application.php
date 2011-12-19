@@ -98,7 +98,8 @@ class Application
 	{
 		$view = new \Kifs\View\Standard(
 			$this->_appScope->getTemplateDir(),
-			$this->_partialInjector
+			$this->_partialInjector,
+			$this->_injectCacheFile() // FIXME allow to configure cache strategy
 		);
 		$view->registerHelper($this->injectViewHelperCssJs());
 		$view->registerHelper($this->injectViewHelperUrl());
@@ -142,6 +143,11 @@ class Application
 			$this->_appScope->getCountry(),
 			$this->_appScope->getLanguage()
 		);
+	}
+
+	public function injectCacheFile()
+	{
+		return new \Kifs\Cache\File($this->_appScope->getPath()->getCacheDir());
 	}
 
 }
