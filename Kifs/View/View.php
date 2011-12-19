@@ -27,7 +27,7 @@ interface View
 	public function getHelper($name);
 
 	/**
-	 * Return the content of the partial named $name. You can pass parameters
+	 * Displays the content of the partial named $name. You can pass parameters
 	 * to the template of the partial in $params
 	 *
 	 * @param string $name

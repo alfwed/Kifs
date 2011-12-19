@@ -30,16 +30,32 @@ class Standard implements View
 	 */
 	private $_helpers = array();
 
+	/**
+	 * Cache manager used to cache some parts of the template
+	 *
+	 * @var \Kifs\Cache\Cache
+	 */
+	private $_cache;
+
+	/**
+	 * Queue of IDs of cache blocks
+	 *
+	 * @var array
+	 */
+	private $_cacheIdQueue;
+
 
 	/**
 	 * @param string $templateDir
 	 * @param string $partialFactory
+	 * @param \Kifs\Cache\Cache $cache
 	 */
-	public function __construct($templateDir, $partialFactory)
+	public function __construct($templateDir, $partialFactory, $cache)
 	{
 		$this->_templateDir = $templateDir;
 		$this->_partialDir = $templateDir.'/Partial';
 		$this->_partialFactory = $partialFactory;
+		$this->_cache = $cache;
 	}
 
 	/**
@@ -86,7 +102,7 @@ class Standard implements View
 	}
 
 	/**
-	 * Return the content of the partial named $name. You can pass parameters
+	 * Displays the content of the partial named $name. You can pass parameters
 	 * to the template of the partial in $params
 	 *
 	 * @param string $name
@@ -100,13 +116,55 @@ class Standard implements View
 			return;
 		}
 
-		if (file_exists($this->_templateDir.'/Partial/'.ucfirst($name).'.php')) {
+		if (file_exists($this->_partialDir.'/'.ucfirst($name).'.php')) {
 			extract($params);
-			include $this->_templateDir.'/Partial/'.ucfirst($name).'.php';
+			include $this->_partialDir.'/'.ucfirst($name).'.php';
 			return;
 		}
 
 		throw new \Exception('Unable to find partial "'.$name.'"');
+	}
+
+	/**
+	 *
+	 *
+	 * @param string $id
+	 * @return void
+	 */
+	public function startCache($id)
+	{
+		$cached = false;
+
+		if ($this->_cache->isCached($id)) {
+			$cached = true;
+			echo $this->_cache->get($id);
+		}
+
+		$this->_cacheIdQueue[] = array('id' => $id, 'cached' => $cached);
+		ob_start();
+	}
+
+	/**
+	 *
+	 *
+	 * @throws \Exception
+	 * @return void
+	 */
+	public function endCache()
+	{
+		$content = ob_get_contents();
+		ob_end_clean();
+
+		if (empty($this->_cacheIdQueue))
+			throw new \Exception('Call to endCache() before any calls to startCache()');
+
+		$cacheBlock = $this->_cacheIdQueue[count($this->cacheIdQueue)-1];
+
+		if ($cacheBlock['cached'])
+			return;
+
+		$this->_cache->set($cacheBlock['id'], $content);
+		echo $content;
 	}
 
 }
