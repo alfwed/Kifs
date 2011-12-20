@@ -6,3 +6,7 @@ set_include_path(realpath(__DIR__.'/..').PATH_SEPARATOR.
 spl_autoload_register(function($className) {
     require str_replace('\\', '/', $className).'.php';
 });
+
+define('TEST_DIR', __DIR__);
+
+date_default_timezone_set('Europe/Paris');

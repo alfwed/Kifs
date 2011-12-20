@@ -40,7 +40,7 @@ class File implements Cache
 
 		$content = $this->_getTimeToken($time).$content;
 
-		return file_put_contents($this->getFilename($id), $content, FILE_BINARY);
+		return file_put_contents($this->_getFilename($id), $content, FILE_BINARY);
 	}
 
 	public function isCached($id)
