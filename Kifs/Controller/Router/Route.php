@@ -35,7 +35,7 @@ class Route
 	 * @param string $controllerName
 	 * @param array $params
 	 */
-	public function __construct($uri, $controllerName, $params)
+	public function __construct($uri, $controllerName, $params = array())
 	{
 		$this->_uri = $this->_cleanUri($uri);
 		$this->_controllerName = $this->_cleanControllerName($controllerName);
