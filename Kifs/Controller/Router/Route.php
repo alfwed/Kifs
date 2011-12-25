@@ -29,6 +29,8 @@ class Route
 	 */
 	private $_params;
 
+	private $_uriPattern;
+
 
 	/**
 	 * @param string $uri
@@ -57,6 +59,14 @@ class Route
 		return $this->_params;
 	}
 
+	public function matchUri()
+	{
+		if (is_null($this->_uriPattern))
+			$this->_setUriPattern();
+
+		return preg_match($this->_uriPattern, $uri);
+	}
+
 	private function _cleanUri($uri)
 	{
 		return trim($uri, '/');
@@ -66,4 +76,33 @@ class Route
 	{
 		return strtolower($controllerName);
 	}
+
+	public function _setUriPattern()
+	{
+		$patterns = array();
+		$params = array();
+		$this->_uriPattern = '#^';
+
+		if (!empty($this->_params)) {
+			foreach ($this->_params as $name => $type) {
+				$params[] = '#'.$name.'#';
+				switch ($type) {
+					case 'int':
+						$patterns[] = '\d+';
+						break;
+					case 'string':
+						$patterns[] = '[^/]+';
+						break;
+					default:
+						throw Exception('Unknow parameter type "'.$type.'"');
+				}
+			}
+
+			$this->_uriPattern .= preg_replace($params, $patterns, $this->_uri);
+		} else {
+			$this->_uriPattern .= $this->_uri;
+		}
+		$this->_uriPattern .= '#';
+	}
+
 }

@@ -33,11 +33,7 @@ class Standard
 	 */
 	public function addRoute($route)
 	{
-		$this->_routes[] = array(
-			'uri' => $route->getUri(),
-			'controller' => $route->getControllerName(),
-			'params' => $route->getParams()
-		);
+		$this->_routes[] = $route;
 	}
 
 	/**
@@ -53,11 +49,9 @@ class Standard
 		$uri = strtolower(substr($uri, 1));
 
 		if (!empty($this->_routes)) {
-			$this->_createUriPatterns($uri);
-
 			foreach ($this->_routes as $route) {
-				if (preg_match($route['uriPattern'], $uri)) {
-					$request->setControllerName($route['controller']);
+				if ($route->matchUri($uri))
+					$request->setControllerName($route->getControllerName());
 					return true;
 				}
 			}
@@ -93,38 +87,6 @@ class Standard
 			return false;
 
 		return true;
-	}
-
-	/**
-	 * Create regexp patterns for all the known routes
-	 */
-	private function _createUriPatterns()
-	{
-		foreach ($this->_routes as &$route) {
-			$patterns = array();
-			$route['uriPattern'] = '#^';
-
-			if (!empty($route['params'])) {
-				foreach ($route['params'] as $name => $type) {
-					$params[] = '#'.$name.'#';
-					switch ($type) {
-						case 'int':
-							$patterns[] = '\d+';
-							break;
-						case 'string':
-							$patterns[] = '[^/]+';
-							break;
-						default:
-							throw Exception('Unknow parameter type');
-					}
-				}
-
-				$route['uriPattern'] .= preg_replace($params, $patterns, $route['uri']);
-			} else {
-				$route['uriPattern'] .= $route['uri'];
-			}
-			$route['uriPattern'] .= '#';
-		}
 	}
 
 	/**
