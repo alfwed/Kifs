@@ -1,0 +1,1 @@
+Content of mock partial <?php echo $param; ?>

@@ -1,0 +1,1 @@
+Content of dummy partial <?php echo $param; ?>
