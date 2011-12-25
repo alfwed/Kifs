@@ -9,13 +9,13 @@ class UrlTest extends PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$rootUrl = 'http://localhost/';
+		$rootUrl = 'http://localhost';
 		$conf = array(
 			new Route('/foo', 'Bar', array()),
 			new Route('/foo/:num', 'Baz', array(':num' => 'int')),
 		);
 
-		$this->_url = new \Kifs\View\Helper\Url($conf, $conf);
+		$this->_url = new \Kifs\View\Helper\Url($conf, $rootUrl);
 	}
 
 	public function testGetUrlRoot()
