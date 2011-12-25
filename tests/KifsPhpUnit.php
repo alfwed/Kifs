@@ -8,3 +8,5 @@ spl_autoload_register(function($className) {
 });
 
 define('TEST_DIR', __DIR__);
+
+date_default_timezone_set('Europe/Paris');

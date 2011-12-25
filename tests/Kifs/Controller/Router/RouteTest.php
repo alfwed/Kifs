@@ -1,6 +1,7 @@
 <?php
+namespace Kifs\Controller\Router;
 
-class RouteTest extends PHPUnit_Framework_TestCase
+class RouteTest extends \PHPUnit_Framework_TestCase
 {
 
 	public function testGetUri()
@@ -43,7 +44,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
 	{
 		$params = array(':foo' => 'bar');
 		$route = new Route('', '', $params);
-		$retrievedParams = $route->getParams()
+		$retrievedParams = $route->getParams();
 		$this->assertEquals(1, count($retrievedParams));
 		$this->assertEquals('bar', $retrievedParams[':foo']);
 	}
