@@ -43,6 +43,8 @@ class Url
 	 */
 	public function getUrl($controller, $params = array())
 	{
+		$controller = strtolower($controller);
+
 		if (empty($params) && isset($this->_cachedRoutes[$controller]))
 			return $this->_cachedRoutes[$controller];
 
@@ -51,7 +53,7 @@ class Url
 			if ($route->getControllerName() == $controller) {
 				$uri = $route->getUri();
 				if (empty($params))
-					$this->_cachedRoutes[$controller] = $uri;
+					$this->_cachedRoutes[$controller] = $this->_getFullUrl($uri);
 				else
 					$uri = self::_getParameterizedUri($uri, $params);
 

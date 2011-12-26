@@ -4,12 +4,15 @@ use \Kifs\Controller\Router\Route;
 
 class UrlTest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var \Kifs\View\Helper\Url
+	 */
 	private $_url;
 
 
 	public function setUp()
 	{
-		$rootUrl = 'http://localhost';
+		$rootUrl = 'http://localhost/';
 		$conf = array(
 			new Route('/foo', 'Bar', array()),
 			new Route('/foo/:num', 'Baz', array(':num' => 'int')),
@@ -20,7 +23,7 @@ class UrlTest extends PHPUnit_Framework_TestCase
 
 	public function testGetUrlRoot()
 	{
-		$this->assertEquals('http://localhost', $this->_url->getUrl(''));
+		$this->assertEquals('http://localhost/', $this->_url->getUrl(''));
 	}
 
 	public function testGetUrlForDefaultRoute()
@@ -33,14 +36,10 @@ class UrlTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('http://localhost/dir/default', $this->_url->getUrl('dir\default'));
 	}
 
-	public function testGetUrlForDefaultRouteWithSubDirectory()
-	{
-		$this->assertEquals('http://localhost/dir/default', $this->_url->getUrl('dir\default'));
-	}
-
 	public function testGetUrlForCustomRoute()
 	{
-		$this->assertEquals('http://localhost/bar', $this->_url->getUrl('foo'));
+		$this->assertEquals('http://localhost/foo', $this->_url->getUrl('bar'));
+		$this->assertEquals('http://localhost/foo', $this->_url->getUrl('Bar'));
 	}
 
 	public function testGetUrlForCustomRouteWithParameters()
