@@ -25,8 +25,6 @@ class Translation
 	private function _getTranslation($key, $plural)
 	{
 		return $this->_translator->getTranslation(
-			$this->_country,
-			$this->_language,
 			$key,
 			$plural
 		);
