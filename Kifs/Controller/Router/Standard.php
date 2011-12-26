@@ -45,12 +45,11 @@ class Standard
 		if ($this->_requestAlreadyRouted($request))
 			return false;
 
-		$uri = $request->getServer('REQUEST_URI');
-		$uri = strtolower(substr($uri, 1));
+		$uri = $this->_cleanUri($request->getServer('REQUEST_URI'));
 
 		if (!empty($this->_routes)) {
 			foreach ($this->_routes as $route) {
-				if ($route->matchUri($uri))
+				if ($route->matchUri($uri)) {
 					$request->setControllerName($route->getControllerName());
 					return true;
 				}
@@ -87,6 +86,15 @@ class Standard
 			return false;
 
 		return true;
+	}
+
+	private function _cleanUri($uri)
+	{
+		if (false !== $pos = strpos($uri, '?'))
+			$uri = substr($uri, 0, $pos - 1);
+
+		$uri = trim($uri, '/');
+		return $uri;
 	}
 
 	/**

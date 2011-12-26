@@ -59,7 +59,7 @@ class Route
 		return $this->_params;
 	}
 
-	public function matchUri()
+	public function matchUri($uri)
 	{
 		if (is_null($this->_uriPattern))
 			$this->_setUriPattern();
