@@ -99,7 +99,7 @@ class Application
 		$view = new \Kifs\View\Standard(
 			$this->_appScope->getTemplateDir(),
 			$this->_partialInjector,
-			$this->_injectCacheFile() // FIXME allow to configure cache strategy
+			$this->injectCacheFile() // FIXME allow to configure cache strategy
 		);
 		$view->registerHelper($this->injectViewHelperCssJs());
 		$view->registerHelper($this->injectViewHelperUrl());
