@@ -28,7 +28,7 @@ abstract class Partial
 		$method = self::_getInjectorMethod($name);
 		if (method_exists($this, $method)) {
 			$partial = $this->$method();
-			$partial->setTemplateDir($this->_appScope->getTemplateDir());
+			$partial->setTemplateDir($this->_appScope->getPath()->getTemplateDir());
 			$partial->setView($view);
 			return $partial;
 		}
