@@ -37,6 +37,8 @@ class Scope
 	 */
 	private $_server;
 
+	private $_request;
+
 	/**
 	 * Array of \Kifs\Db\Connection
 	 *
@@ -116,6 +118,16 @@ class Scope
 	public function getServer()
 	{
 		return $this->_server;
+	}
+
+	public function getRequest()
+	{
+		return $this->_request;
+	}
+
+	public function setRequest($request)
+	{
+		$this->_request = $request;
 	}
 
 	/**
