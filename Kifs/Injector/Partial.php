@@ -28,8 +28,10 @@ abstract class Partial
 		$method = self::_getInjectorMethod($name);
 		if (method_exists($this, $method)) {
 			$partial = $this->$method();
+			/* @var $partial \Kifs\Partial\AbstractPartial */
 			$partial->setTemplateDir($this->_appScope->getPath()->getTemplateDir());
 			$partial->setView($view);
+			$partial->setResponse($this->_appScope->getInstance('Response'));
 			return $partial;
 		}
 

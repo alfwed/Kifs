@@ -14,6 +14,11 @@ abstract class AbstractPartial
 	protected $_view;
 
 	/**
+	 * @var \Kifs\Controller\Response\Http
+	 */
+	protected $_response;
+
+	/**
 	 * @var array
 	 */
 	protected $_params;
@@ -34,6 +39,14 @@ abstract class AbstractPartial
 	public function setView($view)
 	{
 		$this->_view = $view;
+	}
+
+	/**
+	 * @param \Kifs\Controller\Response\Http $response
+	 */
+	public function setResponse($response)
+	{
+		$this->_response = $response;
 	}
 
 	/**

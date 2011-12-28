@@ -73,7 +73,13 @@ class Application
 
 	public function injectResponse()
 	{
-		return new \Kifs\Controller\Response\Http();
+		if (null === $this->_appScope->getInstance('Response'))
+			$this->_appScope->registerInstance(
+				'Response',
+				new \Kifs\Controller\Response\Http()
+			);
+
+		return $this->_appScope->getInstance('Response');
 	}
 
 	public function injectMysqlDbConnection($dbName)
