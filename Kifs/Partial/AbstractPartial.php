@@ -9,6 +9,11 @@ abstract class AbstractPartial
 	protected $_templateDir;
 
 	/**
+	 * @var string
+	 */
+	protected $_templateName;
+
+	/**
 	 * @var \Kifs\View\View
 	 */
 	protected $_view;
@@ -31,6 +36,15 @@ abstract class AbstractPartial
 	public function setTemplateDir($dir)
 	{
 		$this->_templateDir = $dir;
+	}
+
+	/**
+	 * @param string $tpl
+	 * @return void
+	 */
+	public function setTemplateName($tpl)
+	{
+		$this->_templateName = $tpl;
 	}
 
 	/**
@@ -79,7 +93,7 @@ abstract class AbstractPartial
 
 	/**
 	 * Core of the partial. This is where you call business objects and
-	 * assign data to the view
+	 * assign data to the template
 	 *
 	 * @return void
 	 */
@@ -92,11 +106,14 @@ abstract class AbstractPartial
 	 */
 	private function _getFormatedTemplateName()
 	{
-		$names = explode('\\', get_class($this));
-		array_shift($names);
-		$templateName = implode('\\', $names);
+		if (!isset($this->_templateName)) {
+			$names = explode('\\', get_class($this));
+			array_shift($names);
+			$templateName = implode('\\', $names);
+			$this->setTemplateName($templateName);
+		}
 
-		return $templateName.'.php';
+		return $this->_templateName.'.php';
 	}
 
 	/**

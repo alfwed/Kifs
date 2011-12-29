@@ -102,7 +102,7 @@ class Standard implements View
 	}
 
 	/**
-	 * Displays the content of the partial named $name. You can pass parameters
+	 * Returns the content of the partial named $name. You can pass parameters
 	 * to the template of the partial in $params
 	 *
 	 * @param string $name
@@ -111,18 +111,8 @@ class Standard implements View
 	 */
 	public function partial($name, $params = array())
 	{
-		if (null !== $partial = $this->_partialFactory->get($name, $this)) {
-			echo $partial->fetch($params);
-			return;
-		}
-
-		if (file_exists($this->_partialDir.'/'.ucfirst($name).'.php')) {
-			extract($params);
-			include $this->_partialDir.'/'.ucfirst($name).'.php';
-			return;
-		}
-
-		throw new \Exception('Unable to find partial "'.$name.'"');
+		$partial = $this->_partialFactory->get($name, $this);
+		return $partial->fetch($params);
 	}
 
 	/**

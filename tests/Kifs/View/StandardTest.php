@@ -21,16 +21,10 @@ class StandardTest extends PHPUnit_Framework_TestCase
 
 	public function testPartial()
 	{
-		ob_start();
-		$this->view->partial('Dummy', array('param' => 'foo'));
-		$contentTpl = ob_get_contents();
-		ob_end_clean();
+		$contentTpl = $this->view->partial('Dummy', array('param' => 'foo'));
 		$this->assertEquals('Content of dummy partial foo', $contentTpl);
 
-		ob_start();
-		$this->view->partial('Mock', array('param' => 'bar'));
-		$contentPartial = ob_get_contents();
-		ob_end_clean();
+		$contentPartial = $this->view->partial('Mock', array('param' => 'bar'));
 		$this->assertEquals('Content of mock partial bar', $contentTpl);
 	}
 
