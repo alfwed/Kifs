@@ -1,8 +1,9 @@
 <?php
+namespace Kifs\View\Helper;
 
 use \Kifs\Controller\Router\Route;
 
-class UrlTest extends PHPUnit_Framework_TestCase
+class UrlTest extends \PHPUnit_Framework_TestCase
 {
 	/**
 	 * @var \Kifs\View\Helper\Url
