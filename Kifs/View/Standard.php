@@ -11,13 +11,6 @@ class Standard implements View
 	private $_templateDir;
 
 	/**
-	 * Path to the directory where the templates of partials are stored
-	 *
-	 * @var string
-	 */
-	private $_partialDir;
-
-	/**
 	 * @var \Injector\Partial
 	 */
 	private $_partialFactory;
@@ -53,7 +46,6 @@ class Standard implements View
 	public function __construct($templateDir, $partialFactory, $cache)
 	{
 		$this->_templateDir = $templateDir;
-		$this->_partialDir = $templateDir.'/Partial';
 		$this->_partialFactory = $partialFactory;
 		$this->_cache = $cache;
 	}
