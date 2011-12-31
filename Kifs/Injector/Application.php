@@ -103,9 +103,9 @@ class Application
 	public function injectView() // FIXME pass a scope object to allow customization
 	{
 		$view = new \Kifs\View\Standard(
-			$this->_appScope->getTemplateDir(),
+			$this->_appScope->getPath()->getTemplateDir(),
 			$this->_partialInjector,
-			$this->injectCacheFile() // FIXME allow to configure cache strategy
+			$this->injectCache('View')
 		);
 		$view->registerHelper($this->injectViewHelperCssJs());
 		$view->registerHelper($this->injectViewHelperUrl());
@@ -149,6 +149,21 @@ class Application
 			$this->_appScope->getCountry(),
 			$this->_appScope->getLanguage()
 		);
+	}
+
+	/**
+	 * This method should be override for customization
+	 *
+	 * @param string $requester
+	 */
+	public function injectCache($requester)
+	{
+		switch ($requester) {
+			case 'View':
+				return $this->injectCacheFile();
+			default:
+				return $this->injectCacheFile();
+		}
 	}
 
 	public function injectCacheFile()
