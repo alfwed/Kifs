@@ -63,6 +63,8 @@ abstract class Action
 
 	/**
 	 * Called before rendering the view. This is where you do all your business.
+	 *
+	 * @return void
 	 */
 	abstract protected function _preRendering();
 

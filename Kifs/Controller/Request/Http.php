@@ -151,4 +151,15 @@ class Http
 	{
 		$this->_dispatched = $dispatched;
 	}
+
+	/**
+	 * Returns true if the URL was requested by a mobile phone
+	 *
+	 * @return bool
+	 */
+	public function fromMobilePhone()
+	{
+		// FIXME implement fromMobilePhone()
+		return false;
+	}
 }
