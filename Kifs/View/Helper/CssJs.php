@@ -23,11 +23,10 @@ class CssJs
 			}
 		}
 
-		if (!$this->_indexIsArray($controllerName, 'js'))
-			return $js;
-
-		foreach ($this->_config[$controllerName]['js'] as $jsFile) {
-			$js[] = '/js/' . $jsFile;
+		if ($this->_indexIsArray($controllerName, 'js')) {
+			foreach ($this->_config[$controllerName]['js'] as $jsFile) {
+				$js[] = '/js/' . $jsFile;
+			}
 		}
 
 		return $js;
@@ -43,11 +42,10 @@ class CssJs
 			}
 		}
 
-		if (!$this->_indexIsArray($controllerName, 'css'))
-			return $css;
-
-		foreach ($this->_config[$controllerName]['css'] as $cssFile) {
-			$css[] = '/css/' . $cssFile;
+		if (!$this->_indexIsArray($controllerName, 'css')) {
+			foreach ($this->_config[$controllerName]['css'] as $cssFile) {
+				$css[] = '/css/' . $cssFile;
+			}
 		}
 
 		return $css;
