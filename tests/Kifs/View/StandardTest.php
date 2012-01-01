@@ -1,8 +1,11 @@
 <?php
 namespace Kifs\View;
 
-class StandardTest extends PHPUnit_Framework_TestCase
+class StandardTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @var \Kifs\View\Standard
+	 */
 	private $view;
 
 	public function setup()
@@ -21,11 +24,14 @@ class StandardTest extends PHPUnit_Framework_TestCase
 
 	public function testPartial()
 	{
+		$contentTpl = $this->view->partial('Mock', array('param' => 'bar'));
+		$this->assertEquals('Content of mock partial bar', $contentTpl);
+	}
+
+	public function testPartialWithStandardPartial()
+	{
 		$contentTpl = $this->view->partial('Dummy', array('param' => 'foo'));
 		$this->assertEquals('Content of dummy partial foo', $contentTpl);
-
-		$contentPartial = $this->view->partial('Mock', array('param' => 'bar'));
-		$this->assertEquals('Content of mock partial bar', $contentTpl);
 	}
 
 	public function testStartCache()

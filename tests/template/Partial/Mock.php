@@ -1,1 +1,1 @@
-Content of mock partial <?php echo $param; ?>
+Content of mock partial <?php echo $this->param; ?>

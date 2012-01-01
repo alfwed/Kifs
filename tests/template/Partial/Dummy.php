@@ -1,1 +1,1 @@
-Content of dummy partial <?php echo $param; ?>
+Content of dummy partial <?php echo $this->param; ?>
