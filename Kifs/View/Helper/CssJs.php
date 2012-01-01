@@ -42,7 +42,7 @@ class CssJs
 			}
 		}
 
-		if (!$this->_indexIsArray($controllerName, 'css')) {
+		if ($this->_indexIsArray($controllerName, 'css')) {
 			foreach ($this->_config[$controllerName]['css'] as $cssFile) {
 				$css[] = '/css/' . $cssFile;
 			}
