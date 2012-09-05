@@ -39,6 +39,7 @@ class Generator
 		$this->_mkdir($appDir.'/Config/Prod');
 		$this->_mkdir($appDir.'/Config/Test');
 		$this->_genFile($appDir.'/Config/Routes.php', 'Config/Routes.php');
+		$this->_genFile($appDir.'/Config/Url.php', 'Config/Url.php');
 		$this->_genFile($appDir.'/Config/Dev/Db.php', 'Config/Db.php');
 		$this->_genFile($appDir.'/Config/Prod/Db.php', 'Config/Db.php');
 		$this->_genFile($appDir.'/Config/Test/Db.php', 'Config/Db.php');
