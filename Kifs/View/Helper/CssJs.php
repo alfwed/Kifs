@@ -7,13 +7,16 @@ class CssJs
 
 	private $_config;
 
+	private $_controllerName;
 
-	public function __construct($config)
+
+	public function __construct($config, $controllerName)
 	{
 		$this->_config = $config;
+		$this->_controllerName = $controllerName;
 	}
 
-	public function getJsArray($controllerName)
+	public function getJsArray()
 	{
 		$js = array();
 
@@ -23,8 +26,8 @@ class CssJs
 			}
 		}
 
-		if ($this->_indexIsArray($controllerName, 'js')) {
-			foreach ($this->_config[$controllerName]['js'] as $jsFile) {
+		if ($this->_indexIsArray($this->_controllerName, 'js')) {
+			foreach ($this->_config[$this->_controllerName]['js'] as $jsFile) {
 				$js[] = '/js/' . $jsFile;
 			}
 		}
@@ -32,7 +35,7 @@ class CssJs
 		return $js;
 	}
 
-	public function getCssArray($controllerName)
+	public function getCssArray()
 	{
 		$css = array();
 
@@ -42,8 +45,8 @@ class CssJs
 			}
 		}
 
-		if ($this->_indexIsArray($controllerName, 'css')) {
-			foreach ($this->_config[$controllerName]['css'] as $cssFile) {
+		if ($this->_indexIsArray($this->_controllerName, 'css')) {
+			foreach ($this->_config[$this->_controllerName]['css'] as $cssFile) {
 				$css[] = '/css/' . $cssFile;
 			}
 		}

@@ -55,9 +55,15 @@ class Application
 
 		/* @var $controller \Kifs\Controller\Action */
 		$controller->setResponse($this->_appFactory->injectResponse());
-		$controller->setView($this->_appFactory->injectView());
+		$view = $this->_appFactory->injectView();
+		$controller->setView($view);
 
-		$response = $controller->dispatch($request);
+		$layout = $this->_appFactory->injectLayout();
+		$layout->setController($controller);
+		$layout->setView($view);
+
+		$response = $layout->dispatch($request);
+		//$response = $controller->dispatch($request);
 		$response->send();
 	}
 

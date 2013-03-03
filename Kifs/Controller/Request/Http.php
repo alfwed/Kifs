@@ -11,6 +11,8 @@ class Http
 
 	private $_server;
 
+	private $_files;
+
 	private $_controllerName;
 
 	private $_controllerAction;
@@ -23,13 +25,15 @@ class Http
 	 * @param array $queries
 	 * @param array $cookies
 	 * @param array $server
+	 * @param array $files
 	 */
-	public function __construct($posts, $queries, $cookies, $server)
+	public function __construct($posts, $queries, $cookies, $server, $files)
 	{
 		$this->_posts = $posts;
 		$this->_queries = $queries;
 		$this->_cookies = $cookies;
 		$this->_server = $server;
+		$this->_files = $files;
 	}
 
 	/**
@@ -75,6 +79,18 @@ class Http
 	}
 
 	/**
+	 * Set the params matched by the router
+	 *
+	 * @param array $params
+	 */
+	public function setRequestParams($params)
+	{
+		foreach ($params as $k => $v) {
+			$this->_queries[$k] = $v;
+		}
+	}
+
+	/**
 	 * Get cookie named $key
 	 *
 	 * @param string $key
@@ -114,6 +130,27 @@ class Http
 	public function getServers()
 	{
 		return $this->_server;
+	}
+
+	/**
+	 * Get Files variable named $key
+	 *
+	 * @param string $key
+	 */
+	public function getFile($key)
+	{
+		if (isset($this->_files[$key]))
+			return $this->_files[$key];
+
+		return null;
+	}
+
+	/**
+	 * Get all Files variables
+	 */
+	public function getFiles()
+	{
+		return $this->_files;
 	}
 
 	/**
@@ -162,4 +199,10 @@ class Http
 		// FIXME implement fromMobilePhone()
 		return false;
 	}
+
+	public function getRequestMethod()
+	{
+	    return $this->_server['REQUEST_METHOD'];
+	}
+
 }

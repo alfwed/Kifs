@@ -9,9 +9,9 @@ class MysqlPDO extends Statement
 	protected $_stmt;
 
 
-	public function execute($params)
+	public function execute($params = array())
 	{
-		$this->_stmt->execute($params);
+		return $this->_stmt->execute($params);
 	}
 
 	public function fetch($fetchMode = \Kifs\Db\Connection::FETCH_ASSOC)

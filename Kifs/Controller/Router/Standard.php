@@ -45,12 +45,14 @@ class Standard
 		if ($this->_requestAlreadyRouted($request))
 			return false;
 
-		$uri = $this->_cleanUri($request->getServer('REQUEST_URI'));
+		$uri = $this->_cleanUri($request->getQuery('uri'));
 
 		if (!empty($this->_routes)) {
 			foreach ($this->_routes as $route) {
+				/* @var $route \Kifs\Controller\Router\Route */
 				if ($route->matchUri($uri)) {
 					$request->setControllerName($route->getControllerName());
+					$request->setRequestParams($route->getRequestParams());
 					return true;
 				}
 			}
@@ -91,7 +93,7 @@ class Standard
 	private function _cleanUri($uri)
 	{
 		if (false !== $pos = strpos($uri, '?'))
-			$uri = substr($uri, 0, $pos - 1);
+			$uri = substr($uri, 0, $pos);
 
 		$uri = trim($uri, '/');
 		return $uri;

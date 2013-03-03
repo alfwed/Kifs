@@ -63,12 +63,19 @@ class Application
 
 	public function injectRequest()
 	{
-		return new \Kifs\Controller\Request\Http(
-			$this->_appScope->getPosts(),
-			$this->_appScope->getQueries(),
-			$this->_appScope->getCookies(),
-			$this->_appScope->getServer()
-		);
+		if (null === $this->_appScope->getInstance('Request'))
+			$this->_appScope->registerInstance(
+				'Request',
+				new \Kifs\Controller\Request\Http(
+					$this->_appScope->getPosts(),
+					$this->_appScope->getQueries(),
+					$this->_appScope->getCookies(),
+					$this->_appScope->getServer(),
+				    $this->_appScope->getFiles()
+				)
+			);
+
+		return $this->_appScope->getInstance('Request');
 	}
 
 	public function injectResponse()
@@ -100,7 +107,12 @@ class Application
 		return $con;
 	}
 
-	public function injectView() // FIXME pass a scope object to allow customization
+	public function injectLayout()
+	{
+		return new \Kifs\Application\Layout();
+	}
+
+	public function injectView()
 	{
 		$view = new \Kifs\View\Standard(
 			$this->_appScope->getPath()->getTemplateDir(),
@@ -122,7 +134,9 @@ class Application
 			$conf = array();
 		}
 
-		return new \Kifs\View\Helper\CssJs($conf);
+		$controllerName = $this->injectRequest()->getControllerName();
+
+		return new \Kifs\View\Helper\CssJs($conf, $controllerName);
 	}
 
 	public function injectViewHelperUrl()
@@ -130,10 +144,14 @@ class Application
 		$this->_appScope->loadConfig('Routes');
 		$this->_appScope->loadConfig('Url');
 
-		$rootUrl = $this->_appScope->getConfig('Url', $this->_appScope->getCountry());
+		$rootUrlCountryConf = $this->_appScope->getConfig('Url', $this->_appScope->getCountry());
+        $rootUrl = isset($rootUrlCountryConf[$this->_appScope->getLanguage()])
+            ? $rootUrlCountryConf[$this->_appScope->getLanguage()]
+            : null;
 
 		if (null === $rootUrl) {
-			$rootUrl = $this->_appScope->getConfig('Url', 'default');
+			throw new \Exception(printf('Unable to load the URL config for country `%s` and lang `%s`',
+			    $this->_appScope->getCountry(), $this->_appScope->getLanguage()));
 		}
 
 		return new \Kifs\View\Helper\Url(
@@ -145,14 +163,12 @@ class Application
 	public function injectViewHelperTranslation()
 	{
 		return new \Kifs\View\Helper\Translation(
-			$this->_businessInjector->injectI18nTranslator(),
-			$this->_appScope->getCountry(),
-			$this->_appScope->getLanguage()
+			$this->_businessInjector->injectI18nTranslator()
 		);
 	}
 
 	/**
-	 * This method should be override for customization
+	 * This method should be overriden for customization
 	 *
 	 * @param string $requester
 	 */

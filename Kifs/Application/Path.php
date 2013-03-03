@@ -3,6 +3,12 @@ namespace Kifs\Application;
 
 class Path
 {
+	const DIR_NAME_CONFIG = 'Config';
+	const DIR_NAME_CONTROLLER = 'Controller';
+	const DIR_NAME_INJECTOR = 'Injector';
+	const DIR_NAME_MODEL = 'Model';
+	const DIR_NAME_PARTIAL = 'Partial';
+
 	/**
 	 * Path to the document root directory
 	 *

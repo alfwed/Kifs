@@ -50,6 +50,14 @@ class Standard implements View
 		$this->_cache = $cache;
 	}
 
+	public function __get($key)
+	{
+		if (isset($this->_helpers[$key]))
+			return $this->_helpers[$key];
+
+		return null;
+	}
+
 	/**
 	 * Fetch the content of the template $templateName and returns it
 	 *

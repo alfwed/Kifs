@@ -19,7 +19,7 @@ class Business
 
 	public function injectI18nTranslator()
 	{
-		$lang = include $this->_appScope->getAppDir().'/Lang/'.
+		$lang = include $this->_appScope->getPath()->getAppDir().'/Lang/'.
 					$this->_appScope->getCountry().'/'.
 					$this->_appScope->getLanguage().'.php';
 		return new \Kifs\I18n\Translator($lang);

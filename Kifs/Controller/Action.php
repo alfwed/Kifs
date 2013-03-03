@@ -18,6 +18,10 @@ abstract class Action
 	 */
 	protected $_view;
 
+	protected $_enableView = true;
+
+	protected $_enableLayout = true;
+
 
 	public function __construct()
 	{
@@ -33,8 +37,10 @@ abstract class Action
 
 		$this->_preRendering();
 
-		$templateName = $this->_getFormatedTemplateName();
-		$this->_response->appendContent($this->_view->fetch($templateName));
+		if ($this->_enableView) {
+    		$templateName = $this->_getFormatedTemplateName();
+    		$this->_response->appendContent($this->_view->fetch($templateName));
+		}
 
 		return $this->_response;
 	}
@@ -77,9 +83,24 @@ abstract class Action
 	{
 		$names = explode('\\', get_class($this));
 		array_shift($names);
-		$templateName = implode('/', $names);
+		$templateName = \Kifs\Application\Path::DIR_NAME_CONTROLLER . '/' . implode('/', $names);
 
 		return $templateName;
+	}
+
+	protected function _setEnableView($b)
+	{
+	    $this->_enableView = $b;
+	}
+
+	public function enableLayout()
+	{
+	    return $this->_enableLayout;
+	}
+
+	protected function _setEnableLayout($b)
+	{
+	    $this->_enableLayout = $b;
 	}
 
 }

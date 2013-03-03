@@ -23,13 +23,14 @@ class MysqlPDO implements Connection
 		}
 
 		$this->_con->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,
-				$this->getFetchMode(Connection::FETCH_ASSOC));
+				self::getFetchMode(Connection::FETCH_ASSOC));
+		$this->_con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 	}
 
 	public function query($sql, $fetchMode = Connection::FETCH_ASSOC)
 	{
 		return new \Kifs\Db\Statement\MysqlPDO($this->_con->query($sql,
-				$this->getFetchMode($fetchMode)));
+				self::getFetchMode($fetchMode)));
 	}
 
 	public function exec($sql)
@@ -40,6 +41,26 @@ class MysqlPDO implements Connection
 	public function prepare($sql)
 	{
 		return new \Kifs\Db\Statement\MysqlPDO($this->_con->prepare($sql));
+	}
+
+	public function lastInsertId($name = null)
+	{
+		return $this->_con->lastInsertId();
+	}
+
+	public function beginTransaction()
+	{
+		return $this->_con->beginTransaction();
+	}
+
+	public function commit()
+	{
+		return $this->_con->commit();
+	}
+
+	public function rollBack()
+	{
+		return $this->_con->rollBack();
 	}
 
 	public static function getFetchMode($connectionFetchMode)

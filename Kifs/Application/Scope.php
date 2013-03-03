@@ -37,6 +37,11 @@ class Scope
 	 */
 	private $_server;
 
+	/**
+	 * @var array
+	 */
+	private $_files;
+
 	private $_request;
 
 	/**
@@ -71,13 +76,15 @@ class Scope
 	 * @param array $queries
 	 * @param array $cookies
 	 * @param array $server
+	 * @param array $files
 	 */
-	public function __construct($posts, $queries, $cookies, $server)
+	public function __construct($posts, $queries, $cookies, $server, $files)
 	{
 		$this->_posts = $posts;
 		$this->_queries = $queries;
 		$this->_cookies = $cookies;
 		$this->_server = $server;
+		$this->_files = $files;
 	}
 
 	/**
@@ -118,6 +125,16 @@ class Scope
 	public function getServer()
 	{
 		return $this->_server;
+	}
+
+	/**
+	 * Returns FILES variables
+	 *
+	 * @return array
+	 */
+	public function getFiles()
+	{
+		return $this->_files;
 	}
 
 	public function getRequest()

@@ -31,6 +31,8 @@ class Route
 
 	private $_uriPattern;
 
+	private $_requestParams;
+
 
 	/**
 	 * @param string $uri
@@ -59,12 +61,25 @@ class Route
 		return $this->_params;
 	}
 
+	public function getRequestParams()
+	{
+		return $this->_requestParams;
+	}
+
 	public function matchUri($uri)
 	{
 		if (is_null($this->_uriPattern))
 			$this->_setUriPattern();
 
-		return preg_match($this->_uriPattern, $uri);
+		if (preg_match($this->_uriPattern, $uri, $matches)) {
+			foreach ($matches as $k => $v) {
+				if (!is_numeric($k))
+					$this->_requestParams[$k] = $v;
+			}
+			return true;
+		}
+
+		return false;
 	}
 
 	private function _cleanUri($uri)
@@ -88,10 +103,10 @@ class Route
 				$params[] = '#'.$name.'#';
 				switch ($type) {
 					case 'int':
-						$patterns[] = '\d+';
+						$patterns[] = '(?P<'.substr($name, 1).'>\d+)';
 						break;
 					case 'string':
-						$patterns[] = '[^/]+';
+						$patterns[] = '(?P<'.substr($name, 1).'>[^/]+)';
 						break;
 					default:
 						throw Exception('Unknow parameter type "'.$type.'"');

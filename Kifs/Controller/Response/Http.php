@@ -36,6 +36,16 @@ class Http implements Response
 		$this->_content .= $content;
 	}
 
+	public function getContent()
+	{
+		return $this->_content;
+	}
+
+	public function clear()
+	{
+		$this->_content = '';
+	}
+
 	/**
 	 * Add a header to the response
 	 *

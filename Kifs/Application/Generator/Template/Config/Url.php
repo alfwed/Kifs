@@ -1,4 +1,4 @@
-<?php <<<'EOD'
+<?php echo <<<'EOD'
 <?php
 /**
  * Contains root url of the website for each country

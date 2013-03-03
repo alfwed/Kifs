@@ -111,6 +111,9 @@ class ErrorHandler
 	public function exceptionHdlr($e)
 	{
 		$this->errorHdlr(E_ERROR, $e->getMessage(), $e->getFile(), $e->getLine());
+		$this->_hasFatalError = true;
+		require $this->_templateInternalError;
+		$this->_displayOrSendErrors();
 	}
 
 	/**

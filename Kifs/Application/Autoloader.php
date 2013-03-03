@@ -3,7 +3,7 @@ namespace Kifs\Application;
 
 class Autoloader
 {
-	public function register()
+	public static function register()
 	{
 		spl_autoload_register(array('Kifs\Application\Autoloader', 'autoload'));
 	}

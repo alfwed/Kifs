@@ -74,6 +74,9 @@ class Url
 
 	private function _controllerToUri($controller)
 	{
+		if ('index' === $controller)
+			return '';
+
 		return str_replace('\\', '/', $controller);
 	}
 

@@ -23,6 +23,7 @@ interface Connection
 	 *
 	 * @param string $sql
 	 * @param int $fetchMode
+	 * @return \Kifs\Db\Statement\Statement
 	 */
 	public function query($sql, $fetchMode);
 
@@ -37,6 +38,21 @@ interface Connection
 	 * Prepare the query $sql and returns the resulting statement
 	 *
 	 * @param string $sql
+	 * @return \Kifs\Db\Statement\Statement
 	 */
 	public function prepare($sql);
+
+	/**
+	 * Return the id of the last inserted line
+	 *
+	 * @param string $name
+	 * @return int
+	 */
+	public function lastInsertId($name = null);
+
+	public function beginTransaction();
+
+	public function commit();
+
+	public function rollBack();
 }
